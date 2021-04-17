@@ -10,18 +10,18 @@ namespace KGS
 
         private static bool ValidDepth(int Depth)
         {
-            return Depth == 10 || Depth == 1 || Depth == 0; 
+            return Depth == 0b10 || Depth == 0b1 || Depth == 0b0; 
         }
 
         private static int DeltaDepth(char Letter)
         {
             return Letter switch
             {
-                '{' =>   1,
-                '}' =>  -1,
-                '[' =>  10,
-                ']' => -10,
-                 _  =>   0,
+                '{' =>   0b1,
+                '}' =>  -0b1,
+                '[' =>  0b10,
+                ']' => -0b10,
+                 _  =>   0b0,
             };
         }
 
