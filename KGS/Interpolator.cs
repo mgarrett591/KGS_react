@@ -48,8 +48,6 @@ namespace KGS
                 return "Check your Syntax";
             }
 
-            //Utilities.EvaluateVariableTable(VariableTable);
-
             Templet = Templet.Replace('}', '{');
 
             //Variables
