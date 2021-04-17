@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "KGS_CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "{test}  \"test\" \"Success!\""
+    }
+  }
+}
