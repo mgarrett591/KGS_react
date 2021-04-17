@@ -127,13 +127,63 @@ namespace KGS
             return (stem[^1] == '하') ? Stem(stem) : stem;
         }
 
-        private static string FCS(string Verb)
+        public static bool TryIrregularFCS(string VerbStem, bool IFCS, out string IrregularFCS)
+        {
+            char Final = GetLetterFromFinalSyllable(LetterPosition.Final, VerbStem);
+
+            // ㄷ irregular verbs
+            if (Final == 'ㄷ')
+            {
+                IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + '어';
+                return true;
+            }
+            // ㅂ irregular verbs
+            else if (Final == 'ㅂ')
+            {
+                IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, ' ') + '워';
+                return true;
+            }
+            //ㄹ irregular verbs, handled in EvaluateParticle
+
+            //르 irregular verbs
+            else if (VerbStem[^1] == '르')
+            {
+                IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + ((OhAh(VerbStem)) ? '라' : '러');
+                return true;
+            }
+
+            //ㅅ irregular verbs
+            else if (Final == 'ㅅ')
+            {
+                IrregularFCS = "ㅅ irregular verbs not implmented";
+                return true;
+            }
+
+            //으 irregular verbs
+            else if (Final == 'ㅡ' && IFCS)
+            {
+                IrregularFCS = VerbStem;
+                return true;
+            }
+
+            //Regular
+            IrregularFCS = "";
+            return false;
+        }
+
+        private static string FCS(string Verb, bool SpecialFCS)
         {
             string stem = Stem(Verb);
             if(stem == "")
             {
                 return "?";
             }
+
+            if(TryIrregularFCS(stem, SpecialFCS, out string IrregularFCS))
+            {
+                return IrregularFCS;
+            }
+
             char vowel = GetLetterFromFinalSyllable(LetterPosition.Medial, stem);
             vowel = (stem[^1] == '하') ? '하' : vowel;
             switch (vowel)
@@ -182,8 +232,10 @@ namespace KGS
                             return Stem(OtherValue);
                         case "hstem":
                             return Hstem(OtherValue);
+                        case "specialfcs":
+                            return FCS(OtherValue, true);
                         case "fcs":
-                            return FCS(OtherValue);
+                            return FCS(OtherValue, false);
                         case "native":
                             return Numbers.Native(OtherValue);
                         case "sino":

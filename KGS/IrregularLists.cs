@@ -4,9 +4,19 @@ using System.Text;
 
 namespace KGS
 {
-    public static class Irregulars
+    public static class IrregularLists
     {
-        public static readonly Dictionary<string, string> IrgularStems = new Dictionary<string, string>
+        public static readonly string[] ㄷIrregularList = new string[] {};
+        
+        public static readonly string[] ㅂIrregularList = new string[] { };
+        
+        public static readonly string[] 르IrregularList = new string[] { };
+        
+        public static readonly string[] ㅅIrregularList = new string[] { };
+        
+        public static readonly string[] 으IrregularList = new string[] { };
+
+        private static readonly Dictionary<string, string> IrgularStems = new Dictionary<string, string>
         {
             //ㄷ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%84%B7_irregular_verbs
             {"걷", "걸어"},
