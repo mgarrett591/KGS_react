@@ -36,7 +36,6 @@ namespace KGS_GUI
             this.InputBox = new System.Windows.Forms.TextBox();
             this.GrammarMenu = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.peak = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -126,22 +125,11 @@ namespace KGS_GUI
             this.splitContainer1.SplitterDistance = 150;
             this.splitContainer1.TabIndex = 4;
             // 
-            // peak
-            // 
-            this.peak.Location = new System.Drawing.Point(910, 49);
-            this.peak.Name = "peak";
-            this.peak.Size = new System.Drawing.Size(63, 31);
-            this.peak.TabIndex = 5;
-            this.peak.Text = "peak";
-            this.peak.UseVisualStyleBackColor = true;
-            this.peak.Click += new System.EventHandler(this.peak_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(985, 653);
-            this.Controls.Add(this.peak);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.InputBox);
             this.Controls.Add(this.Templet);
@@ -165,7 +153,6 @@ namespace KGS_GUI
         private System.Windows.Forms.TextBox Templet;
         private System.Windows.Forms.ListBox GrammarMenu;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button peak;
     }
 }
 

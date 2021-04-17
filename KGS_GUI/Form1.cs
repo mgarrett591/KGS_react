@@ -110,9 +110,5 @@ namespace KGS_GUI
             Templet.Text = GL.Content[GrammarMenu.SelectedIndex];
         }
 
-        private void peak_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(Expected);
-        }
     }
 }
