@@ -27,7 +27,8 @@ namespace KGS_GUI
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.Refresh();
             Expected = "";
-            GL = new GrammarList(@"C:\Users\mgarrett\MyRepos\projectHana_SuperProject\grammars.txt");
+            GL = new GrammarList(@"grammars.txt");
+            MessageBox.Show(System.IO.Directory.GetCurrentDirectory());
             foreach(string Tital in GL.Titles)
             {
                 GrammarMenu.Items.Add(Tital);
