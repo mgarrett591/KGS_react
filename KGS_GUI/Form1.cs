@@ -28,7 +28,6 @@ namespace KGS_GUI
             dataGridView1.Refresh();
             Expected = "";
             GL = new GrammarList(@"grammars.txt");
-            MessageBox.Show(System.IO.Directory.GetCurrentDirectory());
             foreach(string Tital in GL.Titles)
             {
                 GrammarMenu.Items.Add(Tital);

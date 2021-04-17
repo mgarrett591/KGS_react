@@ -115,6 +115,18 @@ namespace KGS
             return Verb[0..^1];
         }
 
+        private static string Hstem(string Verb)
+        {
+            string stem = Stem(Verb);
+
+            if (stem == "")
+            {
+                return "";
+            }
+
+            return (stem[^1] == '하') ? Stem(stem) : stem;
+        }
+
         private static string FCS(string Verb)
         {
             string stem = Stem(Verb);
@@ -168,6 +180,8 @@ namespace KGS
                     {
                         case "stem":
                             return Stem(OtherValue);
+                        case "hstem":
+                            return Hstem(OtherValue);
                         case "fcs":
                             return FCS(OtherValue);
                         case "native":

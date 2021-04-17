@@ -6,7 +6,7 @@ VerbLocation:{topic}[은/는] {location}에서 {verb.fcs}요.
 Time:지금 {am pm} {hr.hour}시 {min.minute}분이에요.
 Is:{noun}[이에/예]요.
 WithHaGo:{noun1}하고 {noun2}
-CurrentlyDoing:{verb.noha}하고 있어요. (requesting that noha remove that 하다 from 하다 verbs)
+CurrentlyDoing:{verb.hstem}하고 있어요.
 IfThenClause:만약에 {if}[으]면 {then}.
 DevilMadeMeDoIt:{enforcer}[이/가] {object}[을/를] {verb.fcs}[ㅆ]어요.
 Just now:{topic}[은/는] 방금 {object}[을/를] {verb.fcs}[ㅆ]어요.
