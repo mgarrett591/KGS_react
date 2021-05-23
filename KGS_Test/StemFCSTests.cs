@@ -8,6 +8,12 @@ namespace KGS_TEST
         public static readonly string StemTemplet = "{var.stem}";
 
         [Test]
+        public void 켜다_Error()
+        {
+            Assert.AreEqual("", TestCall.Call(FCSTemplet, "켜다"));
+        }
+
+        [Test]
         public void 하()
         {
             Assert.AreEqual("해", TestCall.Call(FCSTemplet, "하다"));
