@@ -28,6 +28,18 @@ namespace KGS
             return ((codepoint - 44032) % 588) % 28 != 0;
         }
 
+        private static bool NonㄹBatchim(string Word)
+        {
+            if (Word == "")
+            {
+                return false;
+            }
+
+            int codepoint = Word[^1];
+            codepoint = ((codepoint - 44032) % 588) % 28;
+            return codepoint != 0 && codepoint != 8;
+        }
+
         private static bool OhAh(string Word)
         {
             char SecondToLastVowel = GetLetterFromFinalSyllable(LetterPosition.Medial, Stem(Word));
@@ -129,16 +141,17 @@ namespace KGS
 
         public static bool TryIrregularFCS(string VerbStem, bool IFCS, out string IrregularFCS)
         {
+            string verb = VerbStem + '다';
             char Final = GetLetterFromFinalSyllable(LetterPosition.Final, VerbStem);
 
             // ㄷ irregular verbs
-            if (Final == 'ㄷ')
+            if (Final == 'ㄷ' && IrregularLists.ㄷIrregularList.Contains(verb))
             {
                 IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + '어';
                 return true;
             }
             // ㅂ irregular verbs
-            else if (Final == 'ㅂ')
+            else if (Final == 'ㅂ' && IrregularLists.ㅂIrregularList.Contains(verb))
             {
                 IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, ' ') + '워';
                 return true;
@@ -146,21 +159,22 @@ namespace KGS
             //ㄹ irregular verbs, handled in EvaluateParticle
 
             //르 irregular verbs
-            else if (VerbStem[^1] == '르')
+            else if (VerbStem[^1] == '르' && !IrregularLists.르RegularList.Contains(verb))
             {
                 IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + ((OhAh(VerbStem)) ? '라' : '러');
                 return true;
             }
 
             //ㅅ irregular verbs
-            else if (Final == 'ㅅ')
+            else if (Final == 'ㅅ' && IrregularLists.ㅅIrregularList.Contains(verb))
             {
+                
                 IrregularFCS = "ㅅ irregular verbs not implmented";
                 return true;
             }
 
             //으 irregular verbs
-            else if (Final == 'ㅡ' && IFCS)
+            else if (Final == 'ㅡ' && IFCS && IrregularLists.으IrregularList.Contains(verb))
             {
                 IrregularFCS = VerbStem;
                 return true;
@@ -174,7 +188,7 @@ namespace KGS
         private static string FCS(string Verb, bool SpecialFCS)
         {
             string stem = Stem(Verb);
-            if(stem == "")
+            if(stem == "" || !Verb.EndsWith('다'))
             {
                 return "?";
             }
@@ -216,7 +230,33 @@ namespace KGS
             }
 
 
-            return "?";
+            return stem + '어';
+        }
+
+        private static string Adjective(string Verb)
+        {
+            string stem = Stem(Verb);
+            if (stem == "")
+            {
+                return "?";
+            }
+
+            if (stem[^1] == '있' || stem[^1] == '없')
+            {
+                return stem + '는';
+            }
+
+            char Final = GetLetterFromFinalSyllable(LetterPosition.Final, stem);
+            if(Final == 'ㄹ')
+            {
+                return SetLetterInFinalSyllable(LetterPosition.Final, stem, 'ㄴ');
+            }
+            else if (Final == 'ㅂ' && IrregularLists.ㅂIrregularList.Contains(Verb))
+            {
+                return SetLetterInFinalSyllable(LetterPosition.Final, stem, ' ') + '운';
+            }
+
+            return (Batchim(stem)) ? stem + '은' : SetLetterInFinalSyllable(LetterPosition.Final, stem, 'ㄴ');
         }
 
         public static string EvaluateVariableTableKey(Dictionary<string, string> VariableTable, string key)
@@ -228,6 +268,8 @@ namespace KGS
                 {
                     switch (exp[1].ToLower())
                     {
+                        case "adj":
+                            return Adjective(OtherValue);
                         case "stem":
                             return Stem(OtherValue);
                         case "hstem":
@@ -358,12 +400,12 @@ namespace KGS
             if(rule == "ㄹ/을")
             {
                 //ㅂ iregular case
-                if(GetLetterFromFinalSyllable(LetterPosition.Final ,PreviousWord) == 'ㅂ')
+                if(GetLetterFromFinalSyllable(LetterPosition.Final ,PreviousWord) == 'ㅂ' && IrregularLists.ㅂIrregularList.Contains(PreviousWord.Split(" ")[^1]))
                 {
                     return SetLetterInFinalSyllable(LetterPosition.Final, PreviousWord, ' ') + "울";
                 }
                 
-                if (!Batchim(PreviousWord))
+                if (!NonㄹBatchim(PreviousWord))
                 {
                     return SetLetterInFinalSyllable(LetterPosition.Final, PreviousWord, 'ㄹ');
                 }
@@ -372,37 +414,37 @@ namespace KGS
 
             if (rule == "을/를")
             {
-                return PreviousWord + (Batchim(PreviousWord) ? "을" : "를");
+                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "을" : "를");
             }
 
             if (rule == "이/가")
             {
-                return PreviousWord + (Batchim(PreviousWord) ? "이" : "가");
+                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "이" : "가");
             }
 
             if (rule == "과/와")
             {
-                return PreviousWord + (Batchim(PreviousWord) ? "과" : "와");
+                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "과" : "와");
             }
 
             if(rule == "랑이/랑")
             {
-                return PreviousWord + (Batchim(PreviousWord) ? "랑이" : "랑");
+                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "랑이" : "랑");
             }
 
             if (rule == "야/아")
             {
-                return PreviousWord + (Batchim(PreviousWord) ? "야" : "아");
+                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "야" : "아");
             }
 
             if (rule == "이에/예")
             {
-                return PreviousWord + (Batchim(PreviousWord) ? "이에" : "예");
+                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "이에" : "예");
             }
 
             if(rule == "으")
             {
-                return PreviousWord + (Batchim(PreviousWord) ? "으" : "");
+                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "으" : "");
             }
 
             if(rule == "ㅆ")

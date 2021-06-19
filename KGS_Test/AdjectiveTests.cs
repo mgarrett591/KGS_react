@@ -45,7 +45,7 @@ namespace KGS_TEST
         [Test]
         public void 있다()
         {
-            Assert.AreEqual("재미있", TestCall.Call(Templet, "재미있다"));
+            Assert.AreEqual("재미있는", TestCall.Call(Templet, "재미있다"));
         }
 
         [Test]

@@ -10,7 +10,7 @@ namespace KGS_TEST
         [Test]
         public void 켜다_Error()
         {
-            Assert.AreEqual("", TestCall.Call(FCSTemplet, "켜다"));
+            Assert.AreEqual("켜어", TestCall.Call(FCSTemplet, "켜다"));
         }
 
         [Test]
@@ -29,15 +29,6 @@ namespace KGS_TEST
         public void ㅏ_no_batchim()
         {
             Assert.AreEqual("싸", TestCall.Call(FCSTemplet, "싸다"));
-        }
-
-        [Test]
-        public void ㅗ_batchim()
-        {
-            //새롭다 irregular
-            //외롭다 irregular
-
-            Assert.AreEqual("expected", TestCall.Call(FCSTemplet, "Dict"));
         }
 
         [Test]

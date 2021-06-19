@@ -28,7 +28,7 @@ namespace KGS_CLS
 
                 for (int i = 2; i < PostArgs.Length; i += 2)
                 {
-                    VariableTable.Add(PostArgs[i - 1].ToLower(), PostArgs[i].ToLower());
+                    VariableTable.Add(PostArgs[i - 1].ToLower(), PostArgs[i]);
                 }
 
                 return VariableTable;

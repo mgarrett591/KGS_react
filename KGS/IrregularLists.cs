@@ -6,67 +6,22 @@ namespace KGS
 {
     public static class IrregularLists
     {
-        public static readonly string[] ㄷIrregularList = new string[] {};
-        
-        public static readonly string[] ㅂIrregularList = new string[] { };
-        
-        public static readonly string[] 르IrregularList = new string[] { };
-        
-        public static readonly string[] ㅅIrregularList = new string[] { };
-        
-        public static readonly string[] 으IrregularList = new string[] { };
+        //ㄷ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%84%B7_irregular_verbs
+        public static readonly string[] ㄷIrregularList = new string[] { "걷다", "깨닫다", "듣다", "묻다", "싣다" };
 
-        private static readonly Dictionary<string, string> IrgularStems = new Dictionary<string, string>
-        {
-            //ㄷ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%84%B7_irregular_verbs
-            {"걷", "걸어"},
-            {"깨닫", "깨달아"},
-            {"듣", "들어"},
-            {"묻", "물어"},
-            {"싣", "실어"},
+        //ㅂ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%85%82_irregular_verbs
+        public static readonly string[] ㅂIrregularList = new string[] { "뜨겁다", "차갑다", "가볍다", "고맙다", "곱다", "눕다", "굽다", "귀엽다", "깁다", "까다롭다", "더럽다", "덥다", "돕다", "두렵다", "맵다", "무겁다", "밉다", "반갑다", "부럽다", "아름답다", "어둡다", "어렵다", "쉽다", "줍다", "즐겁다", "춥다" };
 
-            //ㅂ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%85%82_irregular_verbs
-            {"뜨겁", "뜨거워"},
-            {"차갑", "차가워"},
-            {"가볍", "가벼워"},
-            {"고맙", "고마워"},
-            {"곱", "고와"},
-            {"눕", "누워"},
-            {"굽", "구워"},
-            {"귀엽", "귀여워"},
-            {"깁", "기워"},
-            {"까다롭", "까다로워"},
-            {"더럽", "더러워"},
-            {"덥", "더워"},
-            {"돕", "도와"},
-            {"두렵", "두려워"},
-            {"맵", "매워"},
-            {"무겁", "무거워"},
-            {"밉", "미워"},
-            {"반갑", "반가워"},
-            {"부럽", "부러워"},
-            {"아름답", "아름다워"},
-            {"어둡", "어두워"},
-            {"어렵", "어려워"},
-            {"쉽", "쉬워"},
-            {"줍", "주워"},
-            {"즐겁", "즐거워"},
-            {"춥", "추워"}
-        };
-
-        //Other Irregular verbs types
+        //르 irregular verbs -- https://www.koreanwikiproject.com/wiki/%EB%A5%B4_irregular_verbs
+        public static readonly string[] 르RegularList = new string[] { "따르다" };
 
         //ㄹ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%84%B9_irregular_verbs
         //These should be handled when evaluating the particals
 
-        //르 irregular verbs -- https://www.koreanwikiproject.com/wiki/%EB%A5%B4_irregular_verbs
-        //Seem to be global
-
         //ㅅ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%85%85_irregular_verbs
-        // These are not global
+        public static readonly string[] ㅅIrregularList = new string[] { };
 
         //으 irregular verbs -- https://www.koreanwikiproject.com/wiki/%EC%9C%BC_irregular_verbs
-        //These seem to be global
-
+        public static readonly string[] 으IrregularList = new string[] { };
     }
 }
