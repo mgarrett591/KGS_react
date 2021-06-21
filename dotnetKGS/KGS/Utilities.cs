@@ -2,158 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace KGS
 {
     public static class Utilities
     {
-        private static readonly string[] InitialConsonants = { "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ" };
-        private static readonly string[] MedialVowels = { "ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅘ", "ㅙ", "ㅚ", "ㅛ", "ㅜ", "ㅝ", "ㅞ", "ㅟ", "ㅠ", "ㅡ", "ㅢ", "ㅣ" };
-        private static readonly string[] FinalConsonants = { " ", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ", "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ" };
-        //                                                    0     1    2     3     4     5      6     7     8    9     10     11   12     13    14   15     16   17    18    19     20
-        private enum LetterPosition
-        {
-            Initial,
-            Medial,
-            Final
-        }
-
-        private static bool Batchim(string Word)
-        {
-            if(Word == "")
-            {
-                return false;
-            }
-
-            int codepoint = Word[^1];
-            return ((codepoint - 44032) % 588) % 28 != 0;
-        }
-
-        private static bool NonㄹBatchim(string Word)
-        {
-            if (Word == "")
-            {
-                return false;
-            }
-
-            int codepoint = Word[^1];
-            codepoint = ((codepoint - 44032) % 588) % 28;
-            return codepoint != 0 && codepoint != 8;
-        }
-
-        private static bool OhAh(string Word)
-        {
-            char SecondToLastVowel = GetLetterFromFinalSyllable(LetterPosition.Medial, Stem(Word));
-            return SecondToLastVowel == 'ㅗ' || SecondToLastVowel == 'ㅏ';
-        }
-
-        private static bool IndexInRange(string[] RangeArray, int index)
-        {
-            return index >= 0 && index < RangeArray.Length;
-        }
-
-        private static char GetLetterFromFinalSyllable(LetterPosition LP, string Word)
-        {
-            if (Word == "")
-            {
-                return ' ';
-            }
-
-            int codepoint = Word[^1];
-            codepoint -= 44032;
-
-            int InitialConsonant = codepoint / 588;
-            if(LP == LetterPosition.Initial)
-            {
-                return IndexInRange(InitialConsonants, InitialConsonant)? InitialConsonants[InitialConsonant][0]:' ';
-            }
-
-            codepoint %= 588;
-
-            int MedialVowel = codepoint / 28;
-            if(LP == LetterPosition.Medial)
-            {
-                return IndexInRange(MedialVowels, MedialVowel) ? MedialVowels[MedialVowel][0] : ' ';
-            }
-
-            int FinalConsonant = codepoint % 28;
-            return IndexInRange(FinalConsonants, FinalConsonant) ? FinalConsonants[FinalConsonant][0] : ' ';
-        }
-
-        private static int Trylookup(string[] CharArray, int DefaultValue, char letter)
-        {
-            int index = Array.IndexOf(CharArray, letter.ToString());
-            return (index != -1) ? index : DefaultValue;
-        }
-
-        private static string SetLetterInFinalSyllable(LetterPosition LP, string Word, char NewLetter)
-        {
-            if (Word == "")
-            {
-                return Word;
-            }
-
-            int codepoint = Word[^1];
-            codepoint -= 44032;
-
-            int InitialConsonant = codepoint / 588;
-            codepoint %= 588;
-
-            int MedialVowel = codepoint / 28;
-            int FinalConsonant = codepoint % 28;
-
-            switch (LP)
-            {
-                case LetterPosition.Initial:
-                    InitialConsonant = Trylookup(InitialConsonants, InitialConsonant, NewLetter);
-                    break;
-                case LetterPosition.Medial:
-                    MedialVowel = Trylookup(MedialVowels, MedialVowel, NewLetter);
-                    break;
-                case LetterPosition.Final:
-                    FinalConsonant = Trylookup(FinalConsonants, FinalConsonant, NewLetter);
-                    break;
-            }
-
-            return Stem(Word) + (char)((InitialConsonant * 588 + MedialVowel * 28 + FinalConsonant) + 44032);
-        }
-
-        private static string Stem(string Verb)
-        {
-            if(Verb == "")
-            {
-                return "";
-            }
-            
-            return Verb[0..^1];
-        }
-
-        private static string Hstem(string Verb)
-        {
-            string stem = Stem(Verb);
-
-            if (stem == "")
-            {
-                return "";
-            }
-
-            return (stem[^1] == '하') ? Stem(stem) : stem;
-        }
 
         public static bool TryIrregularFCS(string VerbStem, bool IFCS, out string IrregularFCS)
         {
             string verb = VerbStem + '다';
-            char Final = GetLetterFromFinalSyllable(LetterPosition.Final, VerbStem);
+            char Final = Han_lib.GetLetterFromFinalSyllable(Han_lib.LetterPosition.Final, VerbStem);
 
             // ㄷ irregular verbs
             if (Final == 'ㄷ' && IrregularLists.ㄷIrregularList.Contains(verb))
             {
-                IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + '어';
+                IrregularFCS = Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, VerbStem, 'ㄹ') + '어';
                 return true;
             }
             // ㅂ irregular verbs
             else if (Final == 'ㅂ' && IrregularLists.ㅂIrregularList.Contains(verb))
             {
-                IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, ' ') + '워';
+                IrregularFCS = Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, VerbStem, ' ') + '워';
                 return true;
             }
             //ㄹ irregular verbs, handled in EvaluateParticle
@@ -161,7 +30,7 @@ namespace KGS
             //르 irregular verbs
             else if (VerbStem[^1] == '르' && !IrregularLists.르RegularList.Contains(verb))
             {
-                IrregularFCS = SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + ((OhAh(VerbStem)) ? '라' : '러');
+                IrregularFCS = Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, VerbStem, 'ㄹ') + ((Han_lib.OhAh(VerbStem)) ? '라' : '러');
                 return true;
             }
 
@@ -187,7 +56,7 @@ namespace KGS
 
         private static string FCS(string Verb, bool SpecialFCS)
         {
-            string stem = Stem(Verb);
+            string stem = Han_lib.Stem(Verb);
             if(stem == "" || !Verb.EndsWith('다'))
             {
                 return "?";
@@ -198,29 +67,29 @@ namespace KGS
                 return IrregularFCS;
             }
 
-            char vowel = GetLetterFromFinalSyllable(LetterPosition.Medial, stem);
+            char vowel = Han_lib.GetLetterFromFinalSyllable(Han_lib.LetterPosition.Medial, stem);
             vowel = (stem[^1] == '하') ? '하' : vowel;
             switch (vowel)
             {
                 case '하':
                     return stem[0..^1] + '해';
                 case 'ㅗ':
-                    return (Batchim(stem)) ? stem + '아' : SetLetterInFinalSyllable(LetterPosition.Medial, stem, 'ㅘ');
+                    return (Han_lib.Batchim(stem)) ? stem + '아' : Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Medial, stem, 'ㅘ');
                 case 'ㅏ':
-                    return (Batchim(stem)) ? stem + '아' : stem;
+                    return (Han_lib.Batchim(stem)) ? stem + '아' : stem;
                 case 'ㅓ':
                 case 'ㅐ':
                 case 'ㅔ':
-                    return (Batchim(stem)) ? stem + '어' : stem;
+                    return (Han_lib.Batchim(stem)) ? stem + '어' : stem;
                 case 'ㅣ':
-                    return (Batchim(stem)) ? stem + '어' : SetLetterInFinalSyllable(LetterPosition.Medial, stem, 'ㅕ');
+                    return (Han_lib.Batchim(stem)) ? stem + '어' : Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Medial, stem, 'ㅕ');
                 case 'ㅜ':
-                    bool test = Batchim(stem);
-                    return (Batchim(stem)) ? stem + '어' : SetLetterInFinalSyllable(LetterPosition.Medial, stem, 'ㅝ');
+                    bool test = Han_lib.Batchim(stem);
+                    return (Han_lib.Batchim(stem)) ? stem + '어' : Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Medial, stem, 'ㅝ');
                 case 'ㅡ':
-                    if (!Batchim(stem))
+                    if (!Han_lib.Batchim(stem))
                     {
-                        return SetLetterInFinalSyllable(LetterPosition.Medial, stem, (OhAh(stem)) ? 'ㅏ' : 'ㅓ');
+                        return Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Medial, stem, (Han_lib.OhAh(stem)) ? 'ㅏ' : 'ㅓ');
                     }
                     return stem + '어';
 
@@ -235,7 +104,7 @@ namespace KGS
 
         private static string Adjective(string Verb)
         {
-            string stem = Stem(Verb);
+            string stem = Han_lib.Stem(Verb);
             if (stem == "")
             {
                 return "?";
@@ -246,17 +115,17 @@ namespace KGS
                 return stem + '는';
             }
 
-            char Final = GetLetterFromFinalSyllable(LetterPosition.Final, stem);
+            char Final = Han_lib.GetLetterFromFinalSyllable(Han_lib.LetterPosition.Final, stem);
             if(Final == 'ㄹ')
             {
-                return SetLetterInFinalSyllable(LetterPosition.Final, stem, 'ㄴ');
+                return Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, stem, 'ㄴ');
             }
             else if (Final == 'ㅂ' && IrregularLists.ㅂIrregularList.Contains(Verb))
             {
-                return SetLetterInFinalSyllable(LetterPosition.Final, stem, ' ') + '운';
+                return Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, stem, ' ') + '운';
             }
 
-            return (Batchim(stem)) ? stem + '은' : SetLetterInFinalSyllable(LetterPosition.Final, stem, 'ㄴ');
+            return (Han_lib.Batchim(stem)) ? stem + '은' : Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, stem, 'ㄴ');
         }
 
         public static string EvaluateVariableTableKey(Dictionary<string, string> VariableTable, string key)
@@ -271,61 +140,61 @@ namespace KGS
                         case "adj":
                             return Adjective(OtherValue);
                         case "stem":
-                            return Stem(OtherValue);
+                            return Han_lib.Stem(OtherValue);
                         case "hstem":
-                            return Hstem(OtherValue);
+                            return Han_lib.Hstem(OtherValue);
                         case "specialfcs":
                             return FCS(OtherValue, true);
                         case "fcs":
                             return FCS(OtherValue, false);
                         case "native":
-                            return Numbers.Native(OtherValue);
+                            return Num_lib.Native(OtherValue);
                         case "sino":
-                            return Numbers.Sino(OtherValue);
+                            return Num_lib.Sino(OtherValue);
                         case "item":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "animal":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "cup":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "bottle":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "slice":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "book":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "car":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "action":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "order":
-                            return Numbers.Order(OtherValue);
+                            return Num_lib.Order(OtherValue);
                         case "clothing":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "people":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "bigwig":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "serving":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "second":
-                            return Numbers.Sino(OtherValue);
+                            return Num_lib.Sino(OtherValue);
                         case "minute":
-                            return Numbers.Sino(OtherValue);
+                            return Num_lib.Sino(OtherValue);
                         case "hour":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "day":
-                            return Numbers.Sino(OtherValue);
+                            return Num_lib.Sino(OtherValue);
                         case "month":
-                            return Numbers.Month(OtherValue);
+                            return Num_lib.Month(OtherValue);
                         case "year":
-                            return  Numbers.Sino(OtherValue);
+                            return  Num_lib.Sino(OtherValue);
                         case "age":
-                            return Numbers.NativeCounter(OtherValue);
+                            return Num_lib.NativeCounter(OtherValue);
                         case "$":
-                            return Numbers.Sino(OtherValue);
+                            return Num_lib.Sino(OtherValue);
                         case "₩":
-                            return Numbers.Sino(OtherValue);
+                            return Num_lib.Sino(OtherValue);
                     }
                 }
                 else if (exp[0].ToLower() == "unit")
@@ -394,62 +263,62 @@ namespace KGS
         {
             if (rule == "은/는")
             {
-                return PreviousWord + (Batchim(PreviousWord) ? "은" : "는");
+                return PreviousWord + (Han_lib.Batchim(PreviousWord) ? "은" : "는");
             }
 
             if(rule == "ㄹ/을")
             {
                 //ㅂ iregular case
-                if(GetLetterFromFinalSyllable(LetterPosition.Final ,PreviousWord) == 'ㅂ' && IrregularLists.ㅂIrregularList.Contains(PreviousWord.Split(" ")[^1]))
+                if(Han_lib.GetLetterFromFinalSyllable(Han_lib.LetterPosition.Final ,PreviousWord) == 'ㅂ' && IrregularLists.ㅂIrregularList.Contains(PreviousWord.Split(" ")[^1]))
                 {
-                    return SetLetterInFinalSyllable(LetterPosition.Final, PreviousWord, ' ') + "울";
+                    return Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, PreviousWord, ' ') + "울";
                 }
                 
-                if (!NonㄹBatchim(PreviousWord))
+                if (!Han_lib.NonㄹBatchim(PreviousWord))
                 {
-                    return SetLetterInFinalSyllable(LetterPosition.Final, PreviousWord, 'ㄹ');
+                    return Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, PreviousWord, 'ㄹ');
                 }
                 return PreviousWord + "을";
             }
 
             if (rule == "을/를")
             {
-                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "을" : "를");
+                return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "을" : "를");
             }
 
             if (rule == "이/가")
             {
-                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "이" : "가");
+                return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "이" : "가");
             }
 
             if (rule == "과/와")
             {
-                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "과" : "와");
+                return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "과" : "와");
             }
 
             if(rule == "랑이/랑")
             {
-                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "랑이" : "랑");
+                return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "랑이" : "랑");
             }
 
             if (rule == "야/아")
             {
-                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "야" : "아");
+                return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "야" : "아");
             }
 
             if (rule == "이에/예")
             {
-                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "이에" : "예");
+                return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "이에" : "예");
             }
 
             if(rule == "으")
             {
-                return PreviousWord + (NonㄹBatchim(PreviousWord) ? "으" : "");
+                return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "으" : "");
             }
 
             if(rule == "ㅆ")
             {
-                return SetLetterInFinalSyllable(LetterPosition.Final, PreviousWord, 'ㅆ');
+                return Han_lib.SetLetterInFinalSyllable(Han_lib.LetterPosition.Final, PreviousWord, 'ㅆ');
             }
 
             //('으로 / 로)

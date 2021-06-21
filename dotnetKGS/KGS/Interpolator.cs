@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace KGS
+namespace KGS 
 {
     public static class Interpolator
     {
