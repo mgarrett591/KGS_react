@@ -1,5 +1,8 @@
 # Korean-Grammar-Syntax
 
+note: I recently ported this from c# to pyton, and removed the GUI and dotnet code.
+The GUI I mentioned below is not included currenrtly, but I am planing on implmenting a new GUI.
+
 The I use this project to validate Korean sentances that I write in the course of my Korean studies.
 
 At it's core, this KGS is a simple merge tool, but it also has the capability to conjugate Korean verbs and adjectives, and determine the correct variant of a particle to use. 
