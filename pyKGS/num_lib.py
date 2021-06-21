@@ -1,4 +1,6 @@
-﻿NativeOnes = ["", "하나", "둘", "셋", "넷", "다섯", "여섯", "일곱", "여덟", "아홉"]
+﻿from han_lib import Turn
+
+NativeOnes = ["", "하나", "둘", "셋", "넷", "다섯", "여섯", "일곱", "여덟", "아홉"]
 NativeTens = ["", "열", "스물", "서른", "마흔", "쉰", "예순", "일흔", "여든", "아흔"]
 
 NativeCounterOnes = ["", "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉"]
@@ -7,13 +9,11 @@ SunoOnes = ["","일","이", "삼", "사", "오", "육", "칠", "팔", "구"]
 NoIll = ["", "", "이", "삼", "사", "오", "육", "칠", "팔", "구"]
 
 def TryParse(number):
-    if(number.isnumeric()):
-        return int(number)
-    return number
+    return Turn(number.isnumeric(), int(number), None)
 
 def Native(number):
     value = TryParse(number)
-    if(type(value) == int and value > 0 and value < 100):
+    if(value != None and value > 0 and value < 100):
         return NativeTens[int(value / 10)] + NativeOnes[int(value % 10)]                
     return Sino(number)
 
@@ -33,7 +33,7 @@ def NativeCounter(number):
     if(number == "20"):
         return "스무"
     value = TryParse(number)
-    if (type(value) == int and value > 0 and value < 100):
+    if (value != None and value > 0 and value < 100):
         return NativeTens[int(value / 10)] + NativeCounterOnes[int(value % 10)]
     return Sino(number)
 
@@ -55,7 +55,7 @@ def Sino(number):
     if(number == "0"):
         return "공"
     value = TryParse(number)
-    if (type(value) == int and value <= 1000000000000):
+    if (value != None and value <= 1000000000000):
         if (value == 1000000000000):
             return "일조"
         return 억(value) + 만(value) + 천(value) + 백(value) + 십(value) + 일(value);        

@@ -1,5 +1,4 @@
-﻿import pytest
-import testCall
+﻿import testCall
 Templet = "{var.adj}"
 def test_Regular_no_batchim():
     assert "싼" == testCall.Call(Templet, "싸다")

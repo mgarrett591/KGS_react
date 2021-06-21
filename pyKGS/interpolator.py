@@ -1,4 +1,4 @@
-﻿import pyKGS_Utilities
+﻿import core
 
 def ValidDepth(Depth):
     return Depth == 0b10 or Depth == 0b1 or Depth == 0b0 
@@ -17,7 +17,7 @@ def DeltaDepth(Letter):
 def CheckSyntax(Templet):
     Depth = 0
     for Letter in Templet:
-        Depth += DeltaDepth(Letter);
+        Depth += DeltaDepth(Letter)
         if (not ValidDepth(Depth)):
             return False
     return True
@@ -32,7 +32,7 @@ def Interpolate(Templet, VariableTable):
     #Variables
     VariableInterpolationTable = Templet.split('{')
     for i in range(1, len(VariableInterpolationTable), 2):
-        VariableInterpolationTable[i] = pyKGS_Utilities.EvaluateVariableTableKey(VariableTable, VariableInterpolationTable[i])
+        VariableInterpolationTable[i] = core.EvaluateVariableTableKey(VariableTable, VariableInterpolationTable[i])
     Templet = ''.join(VariableInterpolationTable)
     if(Templet == None): 
         return "Variable Interpolation Failed!"
@@ -41,10 +41,9 @@ def Interpolate(Templet, VariableTable):
     Templet = Templet.replace(']', '[')
     ParticleInterpolationTable = Templet.split('[')
     for i in range(1, len(ParticleInterpolationTable), 2):
-        ParticleInterpolationTable[i] = pyKGS_Utilities.EvaluateParticle(ParticleInterpolationTable[i-1], ParticleInterpolationTable[i])
+        ParticleInterpolationTable[i] = core.EvaluateParticle(ParticleInterpolationTable[i-1], ParticleInterpolationTable[i])
         ParticleInterpolationTable[i - 1] = ""
     Templet = ''.join(ParticleInterpolationTable)
     if(Templet == None): 
         return "Particle Interpolation Failed!"
     return Templet
-
