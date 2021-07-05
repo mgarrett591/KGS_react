@@ -1,4 +1,23 @@
-﻿using System;
+﻿/* 
+//Utilities.EvaluateParticle(ParticleInterpolationTable[i-1], ParticleInterpolationTable[i]);
+public static string EvaluateParticle(string PreviousWord, string rule)
+
+//Utilities.EvaluateVariableTableKey(VariableTable, VariableInterpolationTable[i]);
+public static string EvaluateVariableTableKey(Dictionary<string, string> VariableTable, string key)
+*/
+
+export class Utilities{
+    public static EvaluateParticle(PreviousWord: string, Rule: string){
+        return PreviousWord + "[Particle]";
+    };
+
+    public static EvaluateVariableTableKey(VariableTable: string[], Key: string){
+        return VariableTable[Key];
+    };
+};
+
+/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -328,3 +347,4 @@ namespace KGS
         }
     }
 }
+*/
