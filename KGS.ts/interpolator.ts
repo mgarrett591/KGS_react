@@ -45,7 +45,6 @@ export class Interpolator{
         }
         Templet = VariableInterpolationTable.join("");
 
-        
         //Particals
         Templet = Templet.replace("]", "[");
         let ParticleInterpolationTable:string[] = Templet.split('[');
@@ -53,8 +52,7 @@ export class Interpolator{
             ParticleInterpolationTable[i] = Utilities.EvaluateParticle(ParticleInterpolationTable[i-1], ParticleInterpolationTable[i]);
             ParticleInterpolationTable[i - 1] = "";
         }
-        Templet = ParticleInterpolationTable.join("");
-        
+        Templet = ParticleInterpolationTable.join("");        
 
         return Templet;
     };
