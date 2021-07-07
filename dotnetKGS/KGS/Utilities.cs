@@ -199,55 +199,16 @@ namespace KGS
                 }
                 else if (exp[0].ToLower() == "unit")
                 {
-                    switch (exp[1].ToLower())
+                    string temp = exp[1].ToLower();
+                    if (CounterDict.Dict.TryGetValue(temp, out string value))
                     {
-                        case "item":
-                            return "개";
-                        case "animal":
-                            return "마리";
-                        case "cup":
-                            return "잔";
-                        case "bottle":
-                            return "병";
-                        case "slice":
-                            return "조각";
-                        case "book":
-                            return "권";
-                        case "car":
-                            return "대";
-                        case "action":
-                            return "번";
-                        case "order":
-                            return "번째";
-                        case "clothing":
-                            return "벌";
-                        case "people":
-                            return "명";
-                        case "bigwig":
-                            return "분";
-                        case "serving":
-                            return "인분";
-                        case "second":
-                            return "초";
-                        case "minute":
-                            return "분";
-                        case "hour":
-                            return "시";
-                        case "day":
-                            return "일";
-                        case "month":
-                            return "월";
-                        case "year":
-                            return "년";
-                        case "age":
-                            return "살";
-                        case "$":
-                            return "달러";
-                        case "₩":
-                            return "원";
-                        case "list":
-                            return "item, animal, cup, bottle, slice, book, car, action, order, clothing, people, bigwigs, servings, second, minute, hour, day, month, year, age, $, ₩";
+                        return value;
                     }
+                    else if (temp == "list")
+                    {
+                        return CounterDict.List();
+                    }
+
                 }
             }
             if (VariableTable.TryGetValue(key.ToLower(), out string MainValue))
