@@ -48,7 +48,7 @@ export class Han_lib{
         let codepoint: number = Word.charCodeAt(-1);
         codepoint -= 44032;
 
-        let InitialConsonant: number = codepoint / 588;
+        let InitialConsonant: number = Math.floor(codepoint / 588);
         if (LP === LetterPosition.Initial)
         {
             return Han_lib.IndexInRange(Han_lib.InitialConsonants, InitialConsonant) ? Han_lib.InitialConsonants[InitialConsonant][0] : ' ';
@@ -56,7 +56,7 @@ export class Han_lib{
 
         codepoint %= 588;
 
-        let MedialVowel: number = codepoint / 28;
+        let MedialVowel: number = Math.floor(codepoint / 28);
         if (LP === LetterPosition.Medial)
         {
             return Han_lib.IndexInRange(Han_lib.MedialVowels, MedialVowel) ? Han_lib.MedialVowels[MedialVowel][0] : ' ';
