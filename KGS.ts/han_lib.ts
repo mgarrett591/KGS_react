@@ -1,4 +1,4 @@
-﻿enum LetterPosition{
+﻿export const enum LetterPosition{
     Initial = 1,
     Medial,
     Final
