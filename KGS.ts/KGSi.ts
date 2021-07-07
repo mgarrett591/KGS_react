@@ -1,5 +1,5 @@
 ﻿import { Utilities } from "./utilities";
-export class Interpolator{
+export class KGSi{
     
     private static ValidDepth(Depth:number){
         return Depth == 0b10 || Depth == 0b1 || Depth == 0b0;
@@ -56,4 +56,37 @@ export class Interpolator{
 
         return Templet;
     };
+
+    //TODO
+    public static RenameInTemplet(Templet: string){
+        return "";
+    }
+
+    //TODO
+    public static RenameInVarTable(VariableTable: string[]){
+        return "";
+    }
+
+    //TODO
+    public static GetVarTable(Templet: string){
+        return [];
+    };
+
+    //TODO
+    public static ToStandardForm(Templet: string){
+        return "";
+    };
+
+    //TODO
+    public static ToTemplet(Text: string){
+        return "";
+    }
+
+    //TODO
+    public static Eq(TempletA: string, TempletB: string){
+        return this.ToStandardForm(TempletA) === this.ToStandardForm(TempletB);
+    }
+
+
+
 };
