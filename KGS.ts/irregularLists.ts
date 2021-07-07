@@ -1,4 +1,4 @@
-﻿
+
 export class IrregularLists{
     //ㄷ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%84%B7_irregular_verbs
     public static readonly ㄷIrregularList = [ "걷다", "깨닫다", "듣다", "묻다", "싣다"];

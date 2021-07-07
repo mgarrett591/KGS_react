@@ -1,4 +1,4 @@
-﻿import { Han_lib, LetterPosition } from "./han_lib";
+import { Han_lib, LetterPosition } from "./han_lib";
 import { Num_lib } from "./num_lib";
 import { IrregularLists } from "./irregularLists";
 

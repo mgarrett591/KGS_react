@@ -1,4 +1,4 @@
-﻿export class Num_lib{
+export class Num_lib{
     private static readonly NativeOnes = [ "", "하나", "둘", "셋", "넷", "다섯", "여섯", "일곱", "여덟", "아홉" ];
     private static readonly NativeTens = [ "", "열", "스물", "서른", "마흔", "쉰", "예순", "일흔", "여든", "아흔" ];
 

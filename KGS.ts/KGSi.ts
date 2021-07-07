@@ -1,4 +1,4 @@
-﻿import { Utilities } from "./utilities";
+import { Utilities } from "./utilities";
 export class KGSi{
     
     private static ValidDepth(Depth:number){
