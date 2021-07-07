@@ -1,4 +1,4 @@
-﻿export export class Num_lib{
+﻿export class Num_lib{
     private static readonly NativeOnes = [ "", "하나", "둘", "셋", "넷", "다섯", "여섯", "일곱", "여덟", "아홉" ];
     private static readonly NativeTens = [ "", "열", "스물", "서른", "마흔", "쉰", "예순", "일흔", "여든", "아흔" ];
 
@@ -7,152 +7,131 @@
     private static readonly SunoOnes = [ "","일","이", "삼", "사", "오", "육", "칠", "팔", "구" ];
     private static readonly NoIll = [ "", "", "이", "삼", "사", "오", "육", "칠", "팔", "구" ];
 
-    public static Native(number: string)
-    {
-        if(Int16.TryParse(number, out short value) && value > 0 && value < 100)
+    public static Native(Number: string){
+        let value: number = parseInt(Number);
+        if(!isNaN(value) && value > 0 && value < 100)
         {
-            return Num_lib.NativeTens[value / 10] + Num_lib.NativeOnes[value % 10];
+            return Num_lib.NativeTens[Math.floor(value / 10)] + Num_lib.NativeOnes[value % 10];
         }
         
-        return Sino(number);
+        return Num_lib.Sino(Number);
     }
 
-    public static string Order(string number)
-    {
-        if (number == "1")
+    public static Order(Number: string){
+        if (Number === "1")
         {
             return "첫";
         }
 
-        return NativeCounter(number);
+        return Num_lib.NativeCounter(Number);
     }
 
-    public static string Month(string number)
-    {
-        return number switch
-        {
-            "6" => "유",
-            "10" => "시",
-            _ => Sino(number)
-        };
+    public static Month(Number: string){
+        switch(Number){
+            case "6":
+                return "유";
+            case "10":
+                return "시";
+            default:
+                return Num_lib.Sino(Number);
+        }
     }
     
-    public static string NativeCounter(string number)
-    {
-        if(number == "20")
+    public static NativeCounter(Number: string){
+        if(Number === "20")
         {
             return "스무";
         }
 
-        if (Int16.TryParse(number, out short value) && value > 0 && value < 100)
+        let value: number = parseInt(Number);
+        if (!isNaN(value) && value > 0 && value < 100)
         {
-            return NativeTens[value / 10] + NativeCounterOnes[value % 10];
+            return Num_lib.NativeTens[Math.floor(value / 10)] + Num_lib.NativeCounterOnes[value % 10];
         }
 
-        return Sino(number);
+        return Num_lib.Sino(Number);
     }
 
-    public static string Digits(string number)
-    {
-        string value = number;   
-        value = value.Replace('0', '공');
-        value = value.Replace('1', '일');
-        value = value.Replace('2', '이');
-        value = value.Replace('3', '삼');
-        value = value.Replace('4', '사');
-        value = value.Replace('5', '오');
-        value = value.Replace('6', '육');
-        value = value.Replace('7', '칠');
-        value = value.Replace('8', '팔');
-        value = value.Replace('9', '구');
+    public static Digits(Number: string){
+        let value: string = Number;   
+        value = value.replace('0', '공');
+        value = value.replace('1', '일');
+        value = value.replace('2', '이');
+        value = value.replace('3', '삼');
+        value = value.replace('4', '사');
+        value = value.replace('5', '오');
+        value = value.replace('6', '육');
+        value = value.replace('7', '칠');
+        value = value.replace('8', '팔');
+        value = value.replace('9', '구');
         return value;
     }
 
-    public static string Sino(string number)
-    {
-        if(number == "0")
+    public static Sino(Number: string){
+        if(Number === "0")
         {
             return "공";
         }
 
-        if (UInt64.TryParse(number, out ulong value) && value <= 1000000000000)
+        let value = parseInt(Number);
+        if (!isNaN(value) && value <= 1000000000000)
         {
-            if (value == 1000000000000) return "일조";
+            if (value === 1000000000000) return "일조";
             
-            return 억(value) + 만(value) + 천(value) + 백(value) + 십(value) + 일(value);
-            
-            //return 억(value) + 만(value) + 천(value) + 백(value) + 십(value) + 일(value);
+            return Num_lib.억(value) + Num_lib.만(value) + Num_lib.천(value) + Num_lib.백(value) + Num_lib.십(value) + Num_lib.일(value);
         }
 
-
-        return Digits(number);
+        return Num_lib.Digits(Number);
     }
 
-    private static string 일(ulong number)
-    {
-        return SunoOnes[number % 10];
+    private static 일(Number: number){
+        return Num_lib.SunoOnes[Number % 10];
     }
 
-    private static string 십(ulong number)
-    {
-        if((number % 100) / 10 == 0)
+    private static 십(Number: number){
+        if(Math.floor((Number % 100) / 10) === 0)
         {
             return "";
         }
         
-        return NoIll[(number % 100) / 10] + "십";
+        return Num_lib.NoIll[Math.floor((Number % 100) / 10)] + "십";
     }
-    private static string 백(ulong number)
-    {
-        if ((number % 1000) / 100 == 0)
+
+    private static 백(Number: number){
+        if (Math.floor((Number % 1000) / 100) === 0)
         {
             return "";
         }
 
-        return NoIll[(number % 1000) / 100] + "백";
+        return Num_lib.NoIll[Math.floor((Number % 1000) / 100)] + "백";
     }
 
-    private static string 천(ulong number)
-    {
-        if ((number % 10000) / 1000 == 0)
+    private static 천(Number: number){
+        if (Math.floor((Number % 10000) / 1000) === 0)
         {
             return "";
         }
 
-        return NoIll[(number % 10000) / 1000] + "천";
+        return Num_lib.NoIll[Math.floor((Number % 10000) / 1000)] + "천";
     }
 
-    private static string 만(ulong number)
-    {
-        ulong man = (number % 100_000_000) / 10_000;
-        if (man == 0)
+    private static 만(Number: number){
+        let man: number = Math.floor((Number % 100_000_000) / 10_000);
+        if (man === 0)
         {
             return "";
         }
 
-        return 천(man) + 백(man) + 십(man) + NoIll[man % 10] + "만" + ((number % 10_000 == 0)?"":" ");
+        return Num_lib.천(man) + Num_lib.백(man) + Num_lib.십(man) + Num_lib.NoIll[man % 10] + "만" + ((Number % 10_000 === 0)?"":" ");
     }
 
-    private static string 억(ulong number)
-    {
-        ulong oek = (number % 1_000_000_000_000) / 100_000_000;
-        if (oek == 0)
+    private static 억(Number: number){
+        let oek: number = Math.floor((Number % 1_000_000_000_000) / 100_000_000);
+        if (oek === 0)
         {
             return "";
         }
 
-        return 천(oek) + 백(oek) + 십(oek) + 일(oek) + "억" + ((number % 100_000_000 == 0) ? "" : " ");
-    }
-}
-
-
-namespace KGS
-{
-    public static class Num_lib
-    {
-
-        
-
-        
+        return Num_lib.천(oek) + Num_lib.백(oek) + Num_lib.십(oek) + Num_lib.일(oek) + "억" + ((Number % 100_000_000 === 0) ? "" : " ");
     }
 }
