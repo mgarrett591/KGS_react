@@ -1,0 +1,14 @@
+Past:{topic}[은/는] {object}[을/를] {verb.fcs}[ㅆ]어요.
+Present:{topic}[은/는] {object}[을/를] {verb.fcs}요.
+Future:{topic}[은/는] {object}[을/를] {verb.stem}[ㄹ/을] 거에요.
+MovementOrNoVerbLocation:{topic}[은/는] {location}에 {verb.fcs}요.
+VerbLocation:{topic}[은/는] {location}에서 {verb.fcs}요.
+Time:지금 {am pm} {hr.hour}시 {min.minute}분이에요.
+Is:{noun}[이에/예]요.
+WithHaGo:{noun1}하고 {noun2}
+CurrentlyDoing:{verb.hstem}하고 있어요.
+IfThenClause:만약에 {if}[으]면 {then}.
+DevilMadeMeDoIt:{enforcer}[이/가] {object}[을/를] {verb.fcs}[ㅆ]어요.
+Just now:{topic}[은/는] 방금 {object}[을/를] {verb.fcs}[ㅆ]어요.
+ActionPerTime:{topic}[은/는] {timespan.item}{timeunit}에 {times.item}번 {verb.fcs}요.
+Date:{year.sino}년 {month.month}월 {day.sino}일
