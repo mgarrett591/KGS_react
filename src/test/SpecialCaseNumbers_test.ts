@@ -1,4 +1,6 @@
-﻿import pytest
+﻿export class cat {};
+/*
+import pytest
 import testCall
 
 def test_Order_1():
@@ -9,3 +11,4 @@ def test_Month_6():
 
 def test_Month_10():
     assert "시" == testCall.Call("{var.month}", "10")
+*/

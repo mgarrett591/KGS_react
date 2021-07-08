@@ -1,4 +1,4 @@
-import { IrregularLists } from "./irregularLists";
+import { IrregularLists } from "../irregularLists";
 
 function LogVerb(verb: string){
     console.log(verb);

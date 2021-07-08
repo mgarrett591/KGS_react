@@ -27,6 +27,7 @@ export class Utilities{
             return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + ((Han_lib.OhAh(VerbStem)) ? '라' : '러');
         }
 
+        /*
         //ㅅ irregular verbs
         else if (Final === 'ㅅ' && IrregularLists.ㅅIrregularList.indexOf(verb) != -1)
         {
@@ -38,9 +39,10 @@ export class Utilities{
         {
             return VerbStem;
         }
+        */
 
         //Regular
-        return null;
+        return "";
     }
 
     private static FCS(Verb: string, SpecialFCS: boolean){
@@ -51,7 +53,7 @@ export class Utilities{
         }
 
         let IrregularFCS: string = Utilities.TryIrregularFCS(stem, SpecialFCS);
-        if(IrregularFCS === null)
+        if(IrregularFCS === "")
         {
             return IrregularFCS;
         }
@@ -120,7 +122,8 @@ export class Utilities{
         let exp: string[] = key.split('.');
         if (exp.length === 2)
         {
-            let OtherValue: string = VariableTable[exp[0]];
+            //let OtherValue: string = VariableTable[exp[0]];
+            let OtherValue: string = "VariableTable[exp[0]];";
             if(OtherValue === undefined)
             {
                 switch (exp[1].toLowerCase())
@@ -238,7 +241,8 @@ export class Utilities{
                 }
             }
         }
-        let MainValue: string = VariableTable[key.toLowerCase()]
+        //let MainValue: string = VariableTable[key.toLowerCase()]
+        let MainValue: string = "VariableTable[key.toLowerCase()]";
         if (MainValue != undefined)
         {
             return MainValue;

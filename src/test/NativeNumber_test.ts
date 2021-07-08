@@ -1,4 +1,6 @@
-﻿import pytest
+﻿export class cat {};
+/*
+import pytest
 import testCall
 
 Native = "{var.native}"
@@ -91,3 +93,4 @@ def test_Native_90s():
 #100
 def test_Native_100():
     assert "백" == testCall.Call(Native, "100")
+*/

@@ -1,3 +1,5 @@
+export class cat {};
+/*
 import pytest
 import testCall
 
@@ -54,3 +56,4 @@ def  test_NonVerb():
 
 def  test_Da():
     assert "?" == testCall.Call(FCSTemplet, "다")
+*/

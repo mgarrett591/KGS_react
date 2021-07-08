@@ -1,7 +1,7 @@
-import { KGSi } from "./KGSi";
+import { KGSi } from "../KGSi";
 
 let VTable: string[] = [];
-VTable["dog"] = "DOGs";
+//VTable["dog"] = "DOGs";
 console.log(KGSi.Interpolator("",VTable));
 ////Miss matched {
 console.log(KGSi.Interpolator("{}{}[]{}[]{}}{}{}[]",VTable));  

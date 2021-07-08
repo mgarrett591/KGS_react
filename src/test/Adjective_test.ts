@@ -1,4 +1,6 @@
-﻿import testCall
+﻿export class cat {}
+/*
+import testCall
 Templet = "{var.adj}"
 def test_Regular_no_batchim():
     assert "싼" == testCall.Call(Templet, "싸다")
@@ -23,3 +25,4 @@ def test_있다():
 
 def test_없다():
     assert "맛없는" == testCall.Call(Templet, "맛없다")
+*/

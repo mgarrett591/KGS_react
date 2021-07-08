@@ -1,4 +1,6 @@
-﻿import pytest
+﻿export class cat {};
+/*
+import pytest
 import testCall
 
 def test_Native_1():
@@ -76,3 +78,4 @@ def test_Won_5000():
 def test_List():
     e = "item, animal, cup, bottle, slice, book, car, action, order, clothing, people, bigwigs, servings, second, minute, hour, day, month, year, age, $, ₩";
     assert e == testCall.Call("{unit.list}", "")
+*/

@@ -1,4 +1,6 @@
-﻿import pytest
+﻿export class cat {};
+/*
+import pytest
 import testCall
 
 Sino = "{var.sino}"
@@ -172,3 +174,4 @@ def test_Sino_1_000_000_000_000():
 
 def test_Sino_1_000_000_000_000s():
     assert "일이삼사오육칠팔구일이삼사" == testCall.Call(Sino, "1234567891234")
+*/
