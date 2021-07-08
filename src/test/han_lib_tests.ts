@@ -1,5 +1,16 @@
 export class cat {};
 /*
+Stuff to test
+Batchim {true, false}
+NonㄹBatchim {true, false, false with ㄹ as the Batchim}
+OhAh {true, false}
+GetLetterFromFinalSyllable {All the cases in the table below}
+SetLetterInFinalSyllable {All the cases in the table below}
+Stem {"", 가다, 하다, 한굴}
+Hstem {"", 가다, 하다, 한굴}
+*/
+
+/*
 "가":"ㄱㅏ "
 "깩":"ㄲㅐㄱ"
 "냒":"ㄴㅑㄲ"
