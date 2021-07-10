@@ -1,4 +1,4 @@
-export const enum LetterPosition{
+export enum LetterPosition{
     Initial = 1,
     Medial,
     Final
@@ -15,7 +15,7 @@ export class Han_lib{
             return false;
         }
 
-        let codepoint: number = Word.charCodeAt(-1);
+        let codepoint: number = Word.charAt(Word.length - 1).charCodeAt(0);
         return ((codepoint - 44032) % 588) % 28 != 0;
     }
 
@@ -25,7 +25,7 @@ export class Han_lib{
             return false;
         }
 
-        let codepoint: number = Word.charCodeAt(-1);
+        let codepoint: number = Word.charAt(Word.length - 1).charCodeAt(0);
         codepoint = ((codepoint - 44032) % 588) % 28;
         return codepoint != 0 && codepoint != 8;
     }
@@ -35,7 +35,7 @@ export class Han_lib{
         return SecondToLastVowel === 'ㅗ' || SecondToLastVowel === 'ㅏ';
     }
 
-    public static IndexInRange(RangeArray: string[], index: number){
+    private static IndexInRange(RangeArray: string[], index: number){
         return index >= 0 && index < RangeArray.length;
     }
 
@@ -45,7 +45,7 @@ export class Han_lib{
             return ' ';
         }
 
-        let codepoint: number = Word.charCodeAt(-1);
+        let codepoint: number = Word.charAt(Word.length - 1).charCodeAt(0);
         codepoint -= 44032;
 
         let InitialConsonant: number = Math.floor(codepoint / 588);
@@ -66,18 +66,20 @@ export class Han_lib{
         return Han_lib.IndexInRange(Han_lib.FinalConsonants, FinalConsonant) ? Han_lib.FinalConsonants[FinalConsonant][0] : ' ';
     }
 
-    public static Trylookup(CharArray: string[] , DefaultValue: number, letter: string){
+    private static Trylookup(CharArray: string[] , DefaultValue: number, letter: string){
         let index: number = CharArray.indexOf(letter);
         return (index != -1) ? index : DefaultValue;
     }
 
     public static SetLetterInFinalSyllable(LP: LetterPosition, Word: string, NewLetter: string){
+        
+
         if (Word === "")
         {
             return Word;
         }
 
-        let codepoint: number = Word.charCodeAt(-1);
+        let codepoint: number = Word.charAt(Word.length - 1).charCodeAt(0);
         codepoint -= 44032;
 
         let InitialConsonant: number = Math.floor(codepoint / 588);
@@ -119,7 +121,7 @@ export class Han_lib{
             return "";
         }
 
-        return (stem.charAt(-1) === '하') ? Han_lib.Stem(stem) : stem;
+        return (stem.charAt(stem.length - 1) === '하') ? Han_lib.Stem(stem) : stem;
     }
 
 }
