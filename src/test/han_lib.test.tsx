@@ -101,7 +101,7 @@ test('Hstem 공부하다', () => {
 
 //Build and Tear tests
 function build(Letters: string){
-    Letters = Letters + "     ";
+    Letters = Letters + "   ";
     let Ka = "가";
     Ka = Han_lib.SetLetterInFinalSyllable(LetterPosition.Initial, Ka, Letters[0]);
     Ka = Han_lib.SetLetterInFinalSyllable(LetterPosition.Medial, Ka, Letters[1]);
