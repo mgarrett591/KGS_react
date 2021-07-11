@@ -1,10 +1,5 @@
 import { TestCall } from "./testcall";
 
-test('FCS form of ', () => {
-    let Value: string = TestCall.Call("{var.fcs}", "");
-    expect(Value).toEqual("<?>");
-});
-
 test('FCS form of 켜다', () => {
     let Value: string = TestCall.Call("{var.fcs}", "켜다");
     expect(Value).toEqual("켜어");
@@ -61,8 +56,8 @@ test('FCS form of 주다', () => {
 });
 
 test('FCS form of 떠들다', () => {
-    let Value: string = TestCall.Call("{var.fcs}", "");
-    expect(Value).toEqual("떠들다");
+    let Value: string = TestCall.Call("{var.fcs}", "떠들다");
+    expect(Value).toEqual("떠들어");
 });
 
 test('FCS form of 나쁘다', () => {

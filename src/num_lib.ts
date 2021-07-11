@@ -53,7 +53,7 @@ export class Num_lib{
     }
 
     private static MyReplaceAll(Source:string, Find: string, Replace: string){
-        while(Source.indexOf(Find) != -1){
+        while(Source.indexOf(Find) !== -1){
             Source = Source.replace(Find, Replace);
         }
         return Source;

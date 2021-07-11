@@ -16,7 +16,7 @@ export class Han_lib{
         }
 
         let codepoint: number = Word.charAt(Word.length - 1).charCodeAt(0);
-        return ((codepoint - 44032) % 588) % 28 != 0;
+        return ((codepoint - 44032) % 588) % 28 !== 0;
     }
 
     public static NonㄹBatchim(Word: string){
@@ -27,7 +27,7 @@ export class Han_lib{
 
         let codepoint: number = Word.charAt(Word.length - 1).charCodeAt(0);
         codepoint = ((codepoint - 44032) % 588) % 28;
-        return codepoint != 0 && codepoint != 8;
+        return codepoint !== 0 && codepoint !== 8;
     }
     
     public static OhAh(Word: string){
@@ -68,7 +68,7 @@ export class Han_lib{
 
     private static Trylookup(CharArray: string[] , DefaultValue: number, letter: string){
         let index: number = CharArray.indexOf(letter);
-        return (index != -1) ? index : DefaultValue;
+        return (index !== -1) ? index : DefaultValue;
     }
 
     public static SetLetterInFinalSyllable(LP: LetterPosition, Word: string, NewLetter: string){

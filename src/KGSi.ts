@@ -2,7 +2,7 @@ import { Utilities } from "./utilities";
 export class KGSi{
     
     private static ValidDepth(Depth:number){
-        return Depth == 0b10 || Depth == 0b1 || Depth == 0b0;
+        return Depth === 0b10 || Depth === 0b1 || Depth === 0b0;
     };
 
     private static DeltaDepth(Letter:string){
@@ -31,28 +31,35 @@ export class KGSi{
         return true;
     };
 
-    public static Interpolator(Templet:string, VariableTable: string[]) {
+    private static MyReplaceAll(Source:string, Find: string, Replace: string){
+        while(Source.indexOf(Find) !== -1){
+            Source = Source.replace(Find, Replace);
+        }
+        return Source;
+    }
+
+    public static Interpolator(Templet:string, GrammarVars: Map<string, string>) {
         //Sytax
         if (!this.CheckSyntax(Templet)){
             return "Check your Syntax";
         }
 
         //Variables
-        Templet = Templet.replace("}","{");
+        Templet = KGSi.MyReplaceAll(Templet,"}","{");
         let VariableInterpolationTable:string[] = Templet.split('{');
         for (let i: number = 1; i < VariableInterpolationTable.length; i += 2){
-            VariableInterpolationTable[i] = Utilities.EvaluateVariableTableKey(VariableTable, VariableInterpolationTable[i]);
+            VariableInterpolationTable[i] = Utilities.EvaluateVariableTableKey(GrammarVars, VariableInterpolationTable[i]);
         }
         Templet = VariableInterpolationTable.join("");
 
         //Particals
-        Templet = Templet.replace("]", "[");
-        let ParticleInterpolationTable:string[] = Templet.split('[');
-        for (let i:number = 1; i < ParticleInterpolationTable.length; i += 2){
-            ParticleInterpolationTable[i] = Utilities.EvaluateParticle(ParticleInterpolationTable[i-1], ParticleInterpolationTable[i]);
-            ParticleInterpolationTable[i - 1] = "";
+        Templet = KGSi.MyReplaceAll(Templet,"]", "[");
+        let ParticleTable:string[] = Templet.split('[');
+        for (let i:number = 1; i < ParticleTable.length; i += 2){
+            ParticleTable[i] = Utilities.EvaluateParticle(ParticleTable[i-1], ParticleTable[i]);
+            ParticleTable[i - 1] = "";
         }
-        Templet = ParticleInterpolationTable.join("");        
+        Templet = ParticleTable.join("");        
 
         return Templet;
     };

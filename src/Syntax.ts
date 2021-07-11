@@ -1,6 +1,6 @@
 export class Syntax{
     public static ValidDepth(Depth:number){
-        return Depth == 0b10 || Depth == 0b1 || Depth == 0b0;
+        return Depth === 0b10 || Depth === 0b1 || Depth === 0b0;
     };
 
     public static DeltaDepth(Letter:string){

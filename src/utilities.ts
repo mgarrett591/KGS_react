@@ -10,19 +10,19 @@ export class Utilities{
         let Final: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final, VerbStem);
 
         // ㄷ irregular verbs
-        if (Final === 'ㄷ' && IrregularLists.ㄷIrregularList.indexOf(verb) != -1)
+        if (Final === 'ㄷ' && IrregularLists.ㄷIrregularList.indexOf(verb) !== -1)
         {
             return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + '어';
         }
         // ㅂ irregular verbs
-        else if (Final === 'ㅂ' && IrregularLists.ㅂIrregularList.indexOf(verb) != -1)
+        else if (Final === 'ㅂ' && IrregularLists.ㅂIrregularList.indexOf(verb) !== -1)
         {
             return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, ' ') + '워';
         }
         //ㄹ irregular verbs, handled in EvaluateParticle
 
         //르 irregular verbs
-        else if (VerbStem.charAt(-1) === '르' && !(IrregularLists.르RegularList.indexOf(verb) != -1))
+        else if (VerbStem.charAt(VerbStem.length - 1) === '르' && !(IrregularLists.르RegularList.indexOf(verb) !== -1))
         {
             return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, VerbStem, 'ㄹ') + ((Han_lib.OhAh(VerbStem)) ? '라' : '러');
         }
@@ -47,19 +47,20 @@ export class Utilities{
 
     private static FCS(Verb: string, SpecialFCS: boolean){
         let stem: string = Han_lib.Stem(Verb);
-        if(stem === "" || !(Verb.charAt(-1) === '다'))
+        if(stem === "" || Verb.charAt(Verb.length - 1) !== '다')
         {
             return "?";
         }
 
         let IrregularFCS: string = Utilities.TryIrregularFCS(stem, SpecialFCS);
-        if(IrregularFCS === "")
+        if(IrregularFCS !== "")
         {
             return IrregularFCS;
         }
 
         let vowel: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Medial, stem);
-        vowel = (stem.charAt(-1) === '하') ? '하' : vowel;
+        vowel = (stem.charAt(stem.length - 1) === '하') ? '하' : vowel;
+        console.log(vowel);
         switch (vowel)
         {
             case '하':
@@ -75,7 +76,6 @@ export class Utilities{
             case 'ㅣ':
                 return (Han_lib.Batchim(stem)) ? stem + '어' : Han_lib.SetLetterInFinalSyllable(LetterPosition.Medial, stem, 'ㅕ');
             case 'ㅜ':
-                let test: boolean = Han_lib.Batchim(stem);
                 return (Han_lib.Batchim(stem)) ? stem + '어' : Han_lib.SetLetterInFinalSyllable(LetterPosition.Medial, stem, 'ㅝ');
             case 'ㅡ':
                 if (!Han_lib.Batchim(stem))
@@ -100,7 +100,7 @@ export class Utilities{
             return "?";
         }
 
-        if (stem.charAt(-1) === '있' || stem.charAt(-1) === '없')
+        if (stem.charAt(stem.length - 1) === '있' || stem.charAt(stem.length - 1) === '없')
         {
             return stem + '는';
         }
@@ -110,7 +110,7 @@ export class Utilities{
         {
             return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, stem, 'ㄴ');
         }
-        else if (Final === 'ㅂ' && IrregularLists.ㅂIrregularList.indexOf(Verb) != -1)
+        else if (Final === 'ㅂ' && IrregularLists.ㅂIrregularList.indexOf(Verb) !== -1)
         {
             return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, stem, ' ') + '운';
         }
@@ -118,14 +118,13 @@ export class Utilities{
         return (Han_lib.Batchim(stem)) ? stem + '은' : Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, stem, 'ㄴ');
     }
 
-    public static EvaluateVariableTableKey(VariableTable: string[], key: string){
+    public static EvaluateVariableTableKey(WordMap: Map<string, string>, key: string){
         let exp: string[] = key.split('.');
         if (exp.length === 2)
-        {
-            //let OtherValue: string = VariableTable[exp[0]];
-            let OtherValue: string = "VariableTable[exp[0]];";
-            if(OtherValue === undefined)
+        {            
+            if(WordMap.has(exp[0]))
             {
+                let OtherValue: string = String(WordMap.get(exp[0]));
                 switch (exp[1].toLowerCase())
                 {
                     case "adj":
@@ -186,6 +185,8 @@ export class Utilities{
                         return Num_lib.Sino(OtherValue);
                     case "₩":
                         return Num_lib.Sino(OtherValue);
+                    case "\\":
+                        return Num_lib.Sino(OtherValue);
                 }
             }
             else if (exp[0].toLowerCase() === "unit")
@@ -236,19 +237,17 @@ export class Utilities{
                         return "달러";
                     case "₩":
                         return "원";
+                        case "\\":
+                            return "원";
                     case "list":
                         return "item, animal, cup, bottle, slice, book, car, action, order, clothing, people, bigwigs, servings, second, minute, hour, day, month, year, age, $, ₩";
                 }
             }
         }
-        //let MainValue: string = VariableTable[key.toLowerCase()]
-        let MainValue: string = "VariableTable[key.toLowerCase()]";
-        if (MainValue != undefined)
+        if (WordMap.has(key.toLowerCase()))
         {
-            return MainValue;
+            return String(WordMap.get(key.toLowerCase()));
         }
-        
-
         return "{" + key + "}";
     }
 
@@ -261,7 +260,7 @@ export class Utilities{
         if(rule === "ㄹ/을")
         {
             //ㅂ iregular case
-            if(Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final ,PreviousWord) === 'ㅂ' && (IrregularLists.ㅂIrregularList.indexOf(PreviousWord.split(" ")[-1])) != -1)
+            if(Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final ,PreviousWord) === 'ㅂ' && (IrregularLists.ㅂIrregularList.indexOf(PreviousWord.split(" ")[-1])) !== -1)
             {
                 return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, PreviousWord, ' ') + "울";
             }

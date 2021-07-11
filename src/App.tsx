@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { KGSi } from './KGSi';
 
-function App() {
-  return (
+export function App() {
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <header className="App-header">
+        <input id="input"/>
+        <button onClick={Eval}>Eval</button>
+        </header>
     </div>
   );
+}
+
+export function Eval() {
+    let WordMap: Map<string, string> = new Map<string, string>();
+    WordMap.set("bash","Dog");
+    alert(KGSi.Interpolator("{bash} {unit.item}",WordMap))
+    //alert(<HTMLInputElement>document.getElementById("input")?.innerText);
+    //let inputValue = (document.getElementById("input")).value;
 }
 
 export default App;

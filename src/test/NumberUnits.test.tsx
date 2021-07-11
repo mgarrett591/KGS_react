@@ -6,7 +6,7 @@ test('Native 1', () => {
 });
 
 test('Sino 1', () => {
-    let Value: string = TestCall.Call("{var.sino}", "싸다");
+    let Value: string = TestCall.Call("{var.sino}", "1");
     expect(Value).toEqual("일");
 });
 
