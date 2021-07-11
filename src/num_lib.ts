@@ -52,18 +52,25 @@ export class Num_lib{
         return Num_lib.Sino(Number);
     }
 
+    private static MyReplaceAll(Source:string, Find: string, Replace: string){
+        while(Source.indexOf(Find) != -1){
+            Source = Source.replace(Find, Replace);
+        }
+        return Source;
+    }
+
     public static Digits(Number: string){
         let value: string = Number;   
-        value = value.replace('0', '공');
-        value = value.replace('1', '일');
-        value = value.replace('2', '이');
-        value = value.replace('3', '삼');
-        value = value.replace('4', '사');
-        value = value.replace('5', '오');
-        value = value.replace('6', '육');
-        value = value.replace('7', '칠');
-        value = value.replace('8', '팔');
-        value = value.replace('9', '구');
+        value = Num_lib.MyReplaceAll(value, '0', '공');
+        value = Num_lib.MyReplaceAll(value, '1', '일');
+        value = Num_lib.MyReplaceAll(value, '2', '이');
+        value = Num_lib.MyReplaceAll(value, '3', '삼');
+        value = Num_lib.MyReplaceAll(value, '4', '사');
+        value = Num_lib.MyReplaceAll(value, '5', '오');
+        value = Num_lib.MyReplaceAll(value, '6', '육');
+        value = Num_lib.MyReplaceAll(value, '7', '칠');
+        value = Num_lib.MyReplaceAll(value, '8', '팔');
+        value = Num_lib.MyReplaceAll(value, '9', '구');
         return value;
     }
 
