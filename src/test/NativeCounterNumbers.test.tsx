@@ -50,7 +50,7 @@ test('Native counter 9', () => {
     expect(Value).toEqual("아홉");
 });
 
-//#10
+//10
 test('Native counter 10', () => {
     let Value: string = Num_lib.NativeCounter("10");
     expect(Value).toEqual("열");
