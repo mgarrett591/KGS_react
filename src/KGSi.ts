@@ -2,7 +2,7 @@ import { GrammerLogic } from "./core";
 export class KGSi{
     
     private static ValidDepth(Depth:number){
-        return Depth === 0b10 || Depth === 0b1 || Depth === 0b0;
+        return Depth === 0b100 || Depth === 0b1 || Depth === 0b0;
     };
 
     private static DeltaDepth(Letter:string){
@@ -12,9 +12,9 @@ export class KGSi{
             case '}':
                 return -0b1;
             case '[':
-                return 0b10;
+                return 0b100;
             case ']':
-                return -0b10;
+                return -0b100;
             default:
                 return 0b0;
         }
