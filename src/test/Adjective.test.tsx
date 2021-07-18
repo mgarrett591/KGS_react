@@ -39,3 +39,5 @@ test('Adjective form of 맛없는', () => {
     let Value: string = TestCall.Call("{var.adj}", "맛없다");
     expect(Value).toEqual("맛없는");
 });
+
+

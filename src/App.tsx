@@ -6,7 +6,7 @@ export function App() {
     return (
     <div className="App">
         <header className="App-header">
-        <input id="input"/>
+        <input id="input"></input>
         <button onClick={Eval}>Eval</button>
         </header>
     </div>

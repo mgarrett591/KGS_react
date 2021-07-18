@@ -1,4 +1,4 @@
-import { Utilities } from "./utilities";
+import { GrammerLogic } from "./core";
 export class KGSi{
     
     private static ValidDepth(Depth:number){
@@ -48,7 +48,7 @@ export class KGSi{
         Templet = KGSi.MyReplaceAll(Templet,"}","{");
         let VariableInterpolationTable:string[] = Templet.split('{');
         for (let i: number = 1; i < VariableInterpolationTable.length; i += 2){
-            VariableInterpolationTable[i] = Utilities.EvaluateVariableTableKey(GrammarVars, VariableInterpolationTable[i]);
+            VariableInterpolationTable[i] = GrammerLogic.EvaluateVariableTableKey(GrammarVars, VariableInterpolationTable[i]);
         }
         Templet = VariableInterpolationTable.join("");
 
@@ -56,7 +56,7 @@ export class KGSi{
         Templet = KGSi.MyReplaceAll(Templet,"]", "[");
         let ParticleTable:string[] = Templet.split('[');
         for (let i:number = 1; i < ParticleTable.length; i += 2){
-            ParticleTable[i] = Utilities.EvaluateParticle(ParticleTable[i-1], ParticleTable[i]);
+            ParticleTable[i] = GrammerLogic.EvaluateParticle(ParticleTable[i-1], ParticleTable[i]);
             ParticleTable[i - 1] = "";
         }
         Templet = ParticleTable.join("");        

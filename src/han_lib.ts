@@ -30,9 +30,12 @@ export class Han_lib{
         return codepoint !== 0 && codepoint !== 8;
     }
     
-    public static OhAh(Word: string){
+    public static OhAh(Word: string, Has: string, HasNot: string){
         let SecondToLastVowel: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Medial, Han_lib.Stem(Word));
-        return SecondToLastVowel === 'ㅗ' || SecondToLastVowel === 'ㅏ';
+        if(SecondToLastVowel === 'ㅗ' || SecondToLastVowel === 'ㅏ'){
+            return Has;
+        }
+        return HasNot;
     }
 
     private static IndexInRange(RangeArray: string[], index: number){

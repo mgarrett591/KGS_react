@@ -77,10 +77,10 @@ test('FCS form of 사귀다', () => {
 
 test('FCS when passed a nonverb', () => {
     let Value: string = TestCall.Call("{var.fcs}", "");
-    expect(Value).toEqual("?");
+    expect(Value).toEqual("{var.fcs}");
 });
 
 test('FCS form of 다', () => {
     let Value: string = TestCall.Call("{var.fcs}", "다");
-    expect(Value).toEqual("?");
+    expect(Value).toEqual("{var.fcs}");
 });
