@@ -2,45 +2,42 @@ import { Han_lib, LetterPosition } from "./han_lib";
 import { Num_lib } from "./num_lib";
 import { IrregularLists } from "./irregularLists";
 
-
-const BinParticles = [];
-
 export class GrammerLogic{
     
     public static GetVerbType(Verb: string, IrregularCase: boolean){
         
-        let Final: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final, Han_lib.Stem(Verb));
+        //let Final: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final, Han_lib.Stem(Verb));
         let Medial: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Medial, Han_lib.Stem(Verb));
-        let Initial: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Initial, Han_lib.Stem(Verb));
+        //let Initial: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Initial, Han_lib.Stem(Verb));
         //ㄹ Irregular
-        if(false){
-            return 'ㄹ Irregular';
-        }
+        //if(false){
+        //    return 'ㄹ Irregular';
+        //}
         
         //ㄷ Irregular
-        if(false){
-            return 'ㄷ Irregular';
-        }
+        //if(false){
+        //    return 'ㄷ Irregular';
+        //}
 
         //ㅅ Irregular
-        if(false){
-            return 'ㅅ Irregular';
-        }
+        //if(false){
+        //    return 'ㅅ Irregular';
+        //}
 
         //ㅂ Irregular
-        if(false){
-            return 'ㅂ Irregular';
-        }
+        //if(false){
+        //    return 'ㅂ Irregular';
+        //}
 
         //ㅎ Irregular
-        if(false){
-            return 'ㅎ Irregular';
-        }
+        //if(false){
+        //    return 'ㅎ Irregular';
+        //}
 
         //르 Irregular
-        if(false){
-            return '르 Irregular';
-        }
+        //if(false){
+        //    return '르 Irregular';
+        //}
 
         //하다 Regular
         if(Verb.length >= 2 && Verb.substring(Verb.length - 2) === '하다'){
@@ -92,8 +89,6 @@ export class GrammerLogic{
                 return "ㅅ Irregular";
             case 'ㅂ Irregular':
                 return "ㅂ Irregular";
-            case 'ㄹ Irregular':
-                return "ㄹ Irregular";
             case '르 Irregular':
                 return "르 Irregular";
         }
@@ -179,6 +174,23 @@ export class GrammerLogic{
                 return GrammerLogic.FCS(value, false, key);
             case "eu":
                 return GrammerLogic.Eu(value, key);   
+            case "yo":
+                return "{" + key + "}";
+            case "ni":
+                return "{" + key + "}";
+            case "ni?":
+                return "{" + key + "}";
+            case "ing":
+                return "{" + key + "}";
+            case "want":
+                return "{" + key + "}";
+            case "neg":
+                return "{" + key + "}";
+            case "pt":
+                return "{" + key + "}";
+            case "ft":
+                return "{" + key + "}";
+            
         }
         return "{" + key + "}";
     }
@@ -224,8 +236,6 @@ export class GrammerLogic{
                 return "ㅅ Irregular";
             case 'ㅂ Irregular':
                 return "ㅂ Irregular";
-            case 'ㄹ Irregular':
-                return "ㄹ Irregular";
             case '르 Irregular':
                 return "르 Irregular";
         }

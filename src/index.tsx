@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { KGSi } from './KGSi';
+
+interface Props {}
+
+interface State {
+    templet?: string;
+    output?: string;
+}
+
+function Example() {
+    // Declare a new state variable, which we'll call "count"  const [count, setCount] = useState(0);
+    const [templet, setTeplet] = useState("{unit.item}");
+    const [output, setOutput] = useState("");
+
+    return (
+      <div>
+        <header>Korean Grammar Sytax</header>
+
+        <input value = {templet} onChange={(e) => setTeplet(e.target.value)}></input>
+        <button onClick={() => setOutput(KGSi.LeteralInterpolator(templet))}>
+          Eval
+        </button><br/>
+        <input value = {output}></input><br/>
+      </div>
+    );
+  }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <React.StrictMode>
+        <Example />
+    </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

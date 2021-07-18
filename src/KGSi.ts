@@ -38,6 +38,11 @@ export class KGSi{
         return Source;
     }
 
+    public static LeteralInterpolator(Templet:string){
+        let GrammarVars: Map<string, string> = new Map<string, string>();
+        return this.Interpolator(Templet, GrammarVars)
+    }
+
     public static Interpolator(Templet:string, GrammarVars: Map<string, string>) {
         //Sytax
         if (!this.CheckSyntax(Templet)){
