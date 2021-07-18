@@ -10,6 +10,11 @@ test('FCS form of 하다', () => {
     expect(Value).toEqual("해");
 });
 
+test('FCS form of 하다', () => {
+    let Value: string = TestCall.Call("{var.fcs}", "노래하다");
+    expect(Value).toEqual("노래해");
+});
+
 test('FCS form of 작다', () => {
     let Value: string = TestCall.Call("{var.fcs}", "작다");
     expect(Value).toEqual("작아");
