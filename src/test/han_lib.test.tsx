@@ -303,3 +303,79 @@ test('Tear and Build 힢', () => {
     expect(Tear).toEqual("ㅎㅣㅍ");
     expect(Build).toEqual("힢");
 });
+
+//Lit tests
+test('"Verb" is a lit', () => {
+    let Value: boolean = Han_lib.IsLit('"Verb"');
+    expect(Value).toEqual(true);
+});
+
+test('Verb" is a not', () => {
+    let Value: boolean = Han_lib.IsLit('Verb"');
+    expect(Value).toEqual(false);
+});
+
+test('Verb is a not lit', () => {
+    let Value: boolean = Han_lib.IsLit('Verb');
+    expect(Value).toEqual(false);
+});
+
+test('Verb.adj is a not lit', () => {
+    let Value: boolean = Han_lib.IsLit('Verb.adj');
+    expect(Value).toEqual(false);
+});
+
+test('empty string is a not lit', () => {
+    let Value: boolean = Han_lib.IsLit('');
+    expect(Value).toEqual(false);
+});
+
+test('" is a not lit', () => {
+    let Value: boolean = Han_lib.IsLit('"');
+    expect(Value).toEqual(false);
+});
+
+test('Try GetLit on empyty string', () => {
+    let Value: string = Han_lib.GetLit('');
+    expect(Value).toEqual("");
+});
+
+test('Try GetLit on "', () => {
+    let Value: string = Han_lib.GetLit('"');
+    expect(Value).toEqual("");
+});
+
+test('Try GetLit on ""', () => {
+    let Value: string = Han_lib.GetLit('""');
+    expect(Value).toEqual("");
+});
+
+test('Try GetLit on "당신"', () => {
+    let Value: string = Han_lib.GetLit('"당신"');
+    expect(Value).toEqual("당신");
+});
+
+test('하다 is a 하다 verb', () => {
+    let Value: boolean = Han_lib.IsHaDaVerb('하다');
+    expect(Value).toEqual(true);
+});
+
+test('노래하다 is a 하다 verb', () => {
+    let Value: boolean = Han_lib.IsHaDaVerb('노래하다');
+    expect(Value).toEqual(true);
+});
+
+test('가다 is not a 하다 verb', () => {
+    let Value: boolean = Han_lib.IsHaDaVerb('가다');
+    expect(Value).toEqual(false);
+});
+
+test('다 is not 하다 verb', () => {
+    let Value: boolean = Han_lib.IsHaDaVerb('다');
+    expect(Value).toEqual(false);
+});
+
+test('empty string is not a 하다 verb', () => {
+    let Value: boolean = Han_lib.IsHaDaVerb('');
+    expect(Value).toEqual(false);
+});

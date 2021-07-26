@@ -9,6 +9,28 @@ export class Han_lib{
     private static MedialVowels:string[] = ["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅘ", "ㅙ", "ㅚ", "ㅛ", "ㅜ", "ㅝ", "ㅞ", "ㅟ", "ㅠ", "ㅡ", "ㅢ", "ㅣ"];
     private static FinalConsonants:string[] = [" ", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ", "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ"];
 
+    public static IsLit(key: string){
+        return key.length >= 3 && key.charAt(0) == '"' && key.charAt(key.length - 1) == '"';
+    }
+
+    public static GetLit(key: string){
+        if(key.length < 3){
+            return "";
+        }
+        return key.substr(1, key.length - 2);
+    }
+
+    public static LitMapHas(GrammarVars: Map<string, string>, key: string){
+        return GrammarVars.has(key) || this.IsLit(key);
+    }
+
+    public static LitMapGit(GrammarVars: Map<string, string>, key: string){
+        if(GrammarVars.has(key)){
+            return String(GrammarVars.get(key));
+        }
+        return this.GetLit(key);
+    }
+
     public static Batchim(Word: string){
         if (Word === "")
         {
@@ -127,4 +149,21 @@ export class Han_lib{
         return (stem.charAt(stem.length - 1) === '하') ? Han_lib.Stem(stem) : stem;
     }
 
+    public static Hal(PreviousWord: string, IrregularList: string[]){
+        //ㅂ iregular case
+        if(Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final ,PreviousWord) === 'ㅂ' && (IrregularList.indexOf(PreviousWord.split(" ")[PreviousWord.length - 1])) !== -1)
+        {
+            return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, PreviousWord, ' ') + "울";
+        }
+        
+        if (!Han_lib.NonㄹBatchim(PreviousWord))
+        {
+            return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, PreviousWord, 'ㄹ');
+        }
+        return PreviousWord + "을";
+    }
+
+    public static IsHaDaVerb(Verb: string){
+        return Verb.length >= 2 && Verb.substring(Verb.length - 2) === "하다";
+    }
 }
