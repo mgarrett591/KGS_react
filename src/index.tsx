@@ -23,7 +23,8 @@ function Example() {
         <button onClick={() => setOutput(KGSi.LeteralInterpolator(templet))}>
           Eval
         </button><br/>
-        <input value = {output}></input><br/>
+        <input value = {output}></input><br/><br/><br/><br/><br/>
+        <textarea name="w3review" rows={500} cols={200}></textarea>
       </div>
     );
   }
