@@ -2,45 +2,67 @@ import { Han_lib, LetterPosition } from "./han_lib";
 import { Num_lib } from "./num_lib";
 import { IrregularLists } from "./irregularLists";
 
-export class GrammerLogic{
+export class Grammer{
+    public Messages: string[];
+    public IrregularVerbList: Map<string, boolean>;
+    public Templet: string;
+    public EvalString: string;
+    public WordMap: Map<string, string>;
+    constructor(){
+        this.Messages = [""];
+        this.IrregularVerbList = new Map<string, boolean>();
+        this.Templet = "";
+        this.WordMap = new Map<string, string>();
+        this.EvalString = "";
+    }
+
+    private TestVerb(Verb: string, Type: string){
+        if(this.IrregularVerbList.has(Verb)){
+            if(this.IrregularVerbList.get(Verb)){
+                this.Messages.push(Verb + "is a confirmed " + Type + "irregular verb");
+            }
+            this.Messages.push(Verb + "is a confirmed regular verb");
+        }
+        this.Messages.push(Verb + "may or may not be a " + Type + "Irregular...")
+    }
     
-    public static GetVerbType(Verb: string, IrregularCase: boolean){
+    public GetVerbType(Verb: string, IrregularCase: boolean){
         
-        //let Final: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final, Han_lib.Stem(Verb));
+        let Final: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final, Han_lib.Stem(Verb));
         let Medial: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Medial, Han_lib.Stem(Verb));
         //let Initial: string = Han_lib.GetLetterFromFinalSyllable(LetterPosition.Initial, Han_lib.Stem(Verb));
         //ㄹ Irregular
-        //if(false){
-        //    return 'ㄹ Irregular';
-        //}
+        if(Final === 'ㄹ' && this.TestVerb(Verb, 'ㄹ')){
+            return 'ㄹ Irregular';
+        }
         
         //ㄷ Irregular
-        //if(false){
-        //    return 'ㄷ Irregular';
-        //}
+        if(Final === 'ㄷ' && this.TestVerb(Verb, 'ㄷ')){
+            return 'ㄷ Irregular';
+        }
+
+        //ㅂ Irregular
+        if(Final === 'ㅂ'  && this.TestVerb(Verb, 'ㅂ')){
+            return 'ㅂ Irregular';
+        }
 
         //ㅅ Irregular
-        //if(false){
+        //if(Final === 'ㅅ' && this.TestVerb(Verb, 'ㅅ')){
         //    return 'ㅅ Irregular';
         //}
 
-        //ㅂ Irregular
-        //if(false){
-        //    return 'ㅂ Irregular';
-        //}
-
         //ㅎ Irregular
-        //if(false){
+        //if(Final === 'ㅎ' && this.TestVerb(Verb, 'ㅎ')){
         //    return 'ㅎ Irregular';
         //}
 
         //르 Irregular
-        //if(false){
+        //if(Final === '르' && this.TestVerb(Verb, '르')){
         //    return '르 Irregular';
         //}
 
         //하다 Regular
-        if(Verb.length >= 2 && Verb.substring(Verb.length - 2) === '하다'){
+        if(Verb.length >= 2 && Han_lib.IsHaDaVerb(Verb)){
             return '하다 Regular';
         }
  
@@ -48,14 +70,14 @@ export class GrammerLogic{
         return Medial + ' Regular';
     }
 
-    private static FCS(Verb: string, IrregularCase: boolean, Key: string){
+    private FCS(Verb: string, IrregularCase: boolean, Key: string){
         let stem: string = Han_lib.Stem(Verb);
         if(stem === "" || Verb.charAt(Verb.length - 1) !== '다')
         {
             return "{" + Key + "}";
         }
 
-        let VerbType = GrammerLogic.GetVerbType(Verb, IrregularCase)
+        let VerbType = this.GetVerbType(Verb, IrregularCase)
         switch (VerbType)
         {
             case '하다 Regular':
@@ -98,7 +120,7 @@ export class GrammerLogic{
 
     
 
-    private static Adjective(Verb: string){
+    private Adjective(Verb: string){
         let stem: string = Han_lib.Stem(Verb);
         if (stem === "")
         {
@@ -123,56 +145,56 @@ export class GrammerLogic{
         return (Han_lib.Batchim(stem)) ? stem + '은' : Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, stem, 'ㄴ');
     }
 
-    public static EvaluateVariableTableKey(WordMap: Map<string, string>, key: string){
+    public EvaluateVariableTableKey(key: string){
         let tokens: string[] = key.split('.');
-        if(Han_lib.LitMapHas(WordMap,tokens[0])){
+        if(Han_lib.LitMapHas(this.WordMap,tokens[0])){
             if(tokens.length === 1){
-                return Han_lib.LitMapGit(WordMap,key.toLowerCase()); //Normal variables
+                return Han_lib.LitMapGit(this.WordMap,key.toLowerCase()); //Normal variables
             }
             else if(tokens.length === 2){  //Numbers and mods
-                let num: string = GrammerLogic.numbers(tokens[1], Han_lib.LitMapGit(WordMap,tokens[0]), key)
+                let num: string = this.numbers(tokens[1], Han_lib.LitMapGit(this.WordMap,tokens[0]), key)
                 if(num !== "NaN"){ //Only numbers
                     return num;  
                 }
             }
             //Only Mods
-            return GrammerLogic.ModChain(key, Han_lib.LitMapGit(WordMap,tokens[0]), tokens.slice(1));
+            return this.ModChain(key, Han_lib.LitMapGit(this.WordMap,tokens[0]), tokens.slice(1));
         }
         else if(tokens[0].toLowerCase() === "unit" && tokens.length === 2){  //unit names and unit list
-            return GrammerLogic.Units(tokens[1], key);
+            return this.Units(tokens[1], key);
         }
         //Key not found
         return "{" + key + "}";
     }
 
-    public static ModChain(key: string, value: string, mods: string[]){
+    public ModChain(key: string, value: string, mods: string[]){
         let intermedite: string = value;
         
         
         for(let i = 0; i < mods.length; i++){
-            intermedite = GrammerLogic.Mod(key, intermedite, mods[i]);
+            intermedite = this.Mod(key, intermedite, mods[i]);
         }
         return intermedite;
     }
 
-    public static Mod(key: string, value: string, type: string){
+    public Mod(key: string, value: string, type: string){
         let stem = Han_lib.Stem(value);
         switch (type.toLowerCase()){
             case "adj":
-                return GrammerLogic.Adjective(value);
+                return this.Adjective(value);
             case "stem":
                 return Han_lib.Stem(value);
             case "hstem":
                 return Han_lib.Hstem(value);
             case "sfcs":
-                return GrammerLogic.FCS(value, true, key);
+                return this.FCS(value, true, key);
             case "fcs":
-                return GrammerLogic.FCS(value, false, key);
+                return this.FCS(value, false, key);
             case "eu":
-                return GrammerLogic.Eu(value, key);   
+                return this.Eu(value, key);   
             case "yo":
                 if(value.charAt(value.length - 1) === '다'){
-                    return GrammerLogic.FCS(value, false, key) + "요";
+                    return this.FCS(value, false, key) + "요";
                 }
                 return value + "요";
             case "sup":
@@ -186,7 +208,7 @@ export class GrammerLogic{
                 }
                 return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, stem, "ㅂ") + "니까";
             case "pt":
-                return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, GrammerLogic.FCS(value, false, key), 'ㅆ') + '어';
+                return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, this.FCS(value, false, key), 'ㅆ') + '어';
             case "ft":
                 return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, Han_lib.Stem(value), "ㄹ") + " 거예";
             case "ing":
@@ -227,14 +249,14 @@ export class GrammerLogic{
         return "{" + key + "}";
     }
 
-    public static Eu(Verb: string, Key: string){
+    public Eu(Verb: string, Key: string){
         let stem: string = Han_lib.Stem(Verb);
         if(stem === "" || Verb.charAt(Verb.length - 1) !== '다')
         {
             return "{" + Key + "}";
         }
 
-        let VerbType = GrammerLogic.GetVerbType(Verb, false)
+        let VerbType = this.GetVerbType(Verb, false)
         switch (VerbType)
         {
             case '하 Regular':
@@ -275,7 +297,7 @@ export class GrammerLogic{
         return stem + '어';
     }
 
-    public static numbers(counter: string, value: string, key: string){
+    public numbers(counter: string, value: string, key: string){
         switch (counter.toLowerCase()){
             case "native":
                 return Num_lib.Native(value);
@@ -311,7 +333,7 @@ export class GrammerLogic{
         return "NaN";
     }
 
-    public static Units(name: string, key: string){
+    public Units(name: string, key: string){
         switch (name.toLowerCase()){
             case "item":
                 return "개";
@@ -366,7 +388,7 @@ export class GrammerLogic{
         }
     }
 
-    public static EvaluateParticle(PreviousWord: string, rule: string){
+    public EvaluateParticle(PreviousWord: string, rule: string){
         if (rule === "은/는" || rule.toLowerCase() === "t")
         {
             return PreviousWord + (Han_lib.Batchim(PreviousWord) ? "은" : "는");

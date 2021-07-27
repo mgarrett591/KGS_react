@@ -1,4 +1,5 @@
-import { GrammerLogic } from "./core";
+import { Grammer } from "./Grammer";
+
 export class KGSi{
     
     private static ValidDepth(Depth:number){
@@ -38,22 +39,19 @@ export class KGSi{
         return Source;
     }
 
-    public static LeteralInterpolator(Templet:string){
-        let GrammarVars: Map<string, string> = new Map<string, string>();
-        return this.Interpolator(Templet, GrammarVars)
-    }
-
-    public static Interpolator(Templet:string, GrammarVars: Map<string, string>) {
+    public static Interpolator(gram: Grammer) {
         //Sytax
-        if (!this.CheckSyntax(Templet)){
-            return "Check your Syntax";
+        if (!this.CheckSyntax(gram.Templet)){
+            gram.EvalString = "";
+            gram.Messages.push("Check your Syntax!");
+            return gram;
         }
 
         //Variables
-        Templet = KGSi.MyReplaceAll(Templet,"}","{");
+        let Templet = KGSi.MyReplaceAll(gram.Templet,"}","{");
         let VariableInterpolationTable:string[] = Templet.split('{');
         for (let i: number = 1; i < VariableInterpolationTable.length; i += 2){
-            VariableInterpolationTable[i] = GrammerLogic.EvaluateVariableTableKey(GrammarVars, VariableInterpolationTable[i]);
+            VariableInterpolationTable[i] = gram.EvaluateVariableTableKey(VariableInterpolationTable[i]);
         }
         Templet = VariableInterpolationTable.join("");
 
@@ -61,12 +59,12 @@ export class KGSi{
         Templet = KGSi.MyReplaceAll(Templet,"]", "[");
         let ParticleTable:string[] = Templet.split('[');
         for (let i:number = 1; i < ParticleTable.length; i += 2){
-            ParticleTable[i] = GrammerLogic.EvaluateParticle(ParticleTable[i-1], ParticleTable[i]);
+            ParticleTable[i] = gram.EvaluateParticle(ParticleTable[i-1], ParticleTable[i]);
             ParticleTable[i - 1] = "";
         }
-        Templet = ParticleTable.join("");        
+        gram.EvalString = ParticleTable.join("");        
 
-        return Templet;
+        return gram;
     };
 
     //TODO
