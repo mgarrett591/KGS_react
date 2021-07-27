@@ -44,7 +44,7 @@ export class KGSi{
         if (!this.CheckSyntax(gram.Templet)){
             gram.EvalString = "";
             gram.Messages.push("Check your Syntax!");
-            return gram;
+            return gram.Copy(); //We return a copy so React will update the gui
         }
 
         //Variables
@@ -64,7 +64,7 @@ export class KGSi{
         }
         gram.EvalString = ParticleTable.join("");        
 
-        return gram;
+        return gram.Copy(); //We return a copy so React will update the gui
     };
 
     //TODO

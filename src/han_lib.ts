@@ -10,7 +10,7 @@ export class Han_lib{
     private static FinalConsonants:string[] = [" ", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ", "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ"];
 
     public static IsLit(key: string){
-        return key.length >= 3 && key.charAt(0) == '"' && key.charAt(key.length - 1) == '"';
+        return key.length >= 3 && key.charAt(0) === '"' && key.charAt(key.length - 1) === '"';
     }
 
     public static GetLit(key: string){

@@ -12,3 +12,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+input {
+  width: 1200px;
+  height: 60px;
+  font-size: 300%;
+}
+
+button {
+  width: 1200px;
+  height: 30px;
+}

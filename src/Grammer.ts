@@ -16,6 +16,46 @@ export class Grammer{
         this.EvalString = "";
     }
 
+    public Copy(){
+        let Copy: Grammer = new Grammer();
+        Copy.Messages = this.Messages;
+        Copy.IrregularVerbList = this.IrregularVerbList;
+        Copy.Templet = this.Templet;
+        Copy.WordMap = this.WordMap;
+        Copy.EvalString = this.EvalString;
+        return Copy;
+    }
+
+    //need this to update Messages from the gui
+    public ClearMessages(){
+        let Copy: Grammer = this.Copy();
+        Copy.Messages = [""];
+        return Copy; //We return a copy so React will update the gui
+    }
+
+    //need this to update templet from the gui
+    public SetTemplet(Templet: string){
+        let Copy: Grammer = this.Copy();
+        Copy.Messages = [""];
+        Copy.Templet = Templet;
+        Copy.EvalString = "";
+        return Copy; //We return a copy so React will update the gui
+    }
+
+    //need this to update IrregularVerbList from the gui
+    public SetIrregularVerbList(IrregularVerbList: Map<string, boolean>){
+        let Copy: Grammer = this.Copy();
+        Copy.IrregularVerbList = IrregularVerbList;
+        return Copy; //We return a copy so React will update the gui
+    }
+    
+    //need this to update templet from the gui
+    public SetWordMap(WordMap: Map<string, string>){
+        let Copy: Grammer = this.Copy();
+        Copy.WordMap = WordMap;
+        return Copy; //We return a copy so React will update the gui
+    }
+
     private TestVerb(Verb: string, Type: string){
         if(this.IrregularVerbList.has(Verb)){
             if(this.IrregularVerbList.get(Verb)){

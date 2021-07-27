@@ -2,33 +2,26 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { KGSi } from './KGSi';
-import { grammarData } from "./grammarData";
-
-interface Props {}
-
-interface State {
-    templet?: string;
-    output?: string;
-    gData?: grammarData;
-    wordmap?: Map<string, string>;
-}
+import { Grammer } from "./Grammer";
 
 function Example() {
     // Declare a new state variable, which we'll call "count"  const [count, setCount] = useState(0);
-    const [templet, setTeplet] = useState("{unit.item}");
-    const [output, setOutput] = useState("");
-    const [wordmap, setWordmap] = useState(new Map<string, string>());
-    const [gData, setGData]  = useState(new grammarData());
+    const [gram, setGrammer]  = useState(new Grammer());
     return (
       <div>
-        <header>Korean Grammar Sytax</header>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <header>Korean Grammar Sytax</header><br/>
 
-        <input value = {templet} onChange={(e) => setTeplet(e.target.value)}></input>
-        <button onClick={() => setOutput(KGSi.Interpolator(templet, wordmap, gData))}>
+        <input value = {gram.Templet} onChange={(e) => setGrammer(gram.SetTemplet(e.target.value))}></input><br/>
+        <input value = {gram.EvalString}></input>
+        <button onClick={() => setGrammer(KGSi.Interpolator(gram))}>
           Eval
         </button><br/>
-        <input value = {output}></input><br/><br/><br/><br/><br/>
-        <textarea name="w3review" rows={500} cols={200}></textarea>
+        <br/><br/><br/><br/><br/>
+        <textarea name="w3review" rows={20} cols={200}></textarea>
       </div>
     );
   }
