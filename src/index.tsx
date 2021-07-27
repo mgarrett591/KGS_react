@@ -15,11 +15,8 @@ function Example() {
         <br/>
         <header>Korean Grammar Sytax</header><br/>
 
-        <input value = {gram.Templet} onChange={(e) => setGrammer(gram.SetTemplet(e.target.value))}></input><br/>
+        <input value = {gram.Templet} onChange={(e) => setGrammer(KGSi.Interpolator(gram.SetTemplet(e.target.value)))}></input><br/>
         <input value = {gram.EvalString}></input>
-        <button onClick={() => setGrammer(KGSi.Interpolator(gram))}>
-          Eval
-        </button><br/>
         <br/><br/><br/><br/><br/>
         <textarea name="w3review" rows={20} cols={200}></textarea>
       </div>
