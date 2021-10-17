@@ -29,7 +29,7 @@ export class KGSi{
                 return false;
             }
         }
-        return true;
+        return Depth === 0;
     };
 
     private static MyReplaceAll(Source:string, Find: string, Replace: string){
@@ -66,37 +66,5 @@ export class KGSi{
 
         return gram.Copy(); //We return a copy so React will update the gui
     };
-
-    //TODO
-    public static RenameInTemplet(Templet: string){
-        return "";
-    }
-
-    //TODO
-    public static RenameInVarTable(VariableTable: string[]){
-        return "";
-    }
-
-    //TODO
-    public static GetVarTable(Templet: string){
-        return [];
-    };
-
-    //TODO
-    public static ToStandardForm(Templet: string){
-        return "";
-    };
-
-    //TODO
-    public static ToTemplet(Text: string){
-        return "";
-    }
-
-    //TODO
-    public static Eq(TempletA: string, TempletB: string){
-        return this.ToStandardForm(TempletA) === this.ToStandardForm(TempletB);
-    }
-
-
 
 };

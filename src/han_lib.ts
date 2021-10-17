@@ -149,6 +149,15 @@ export class Han_lib{
         return (stem.charAt(stem.length - 1) === '하') ? Han_lib.Stem(stem) : stem;
     }
 
+    public static Pstem(Verb: string){
+        if (Verb === "")
+        {
+            return "";
+        }
+
+        return this.SetLetterInFinalSyllable(LetterPosition.Final, this.Stem(Verb), "ㅆ");
+    }
+
     public static Hal(PreviousWord: string, IrregularList: string[]){
         //ㅂ iregular case
         if(Han_lib.GetLetterFromFinalSyllable(LetterPosition.Final ,PreviousWord) === 'ㅂ' && (IrregularList.indexOf(PreviousWord.split(" ")[PreviousWord.length - 1])) !== -1)

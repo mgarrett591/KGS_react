@@ -1,6 +1,7 @@
 import { Han_lib, LetterPosition } from "./han_lib";
 import { Num_lib } from "./num_lib";
 import { IrregularLists } from "./irregularLists";
+import { Alias } from './Alias';
 
 export class Grammer{
     public Messages: string[];
@@ -200,8 +201,8 @@ export class Grammer{
             //Only Mods
             return this.ModChain(key, Han_lib.LitMapGit(this.WordMap,tokens[0]), tokens.slice(1));
         }
-        else if(tokens[0].toLowerCase() === "unit" && tokens.length === 2){  //unit names and unit list
-            return this.Units(tokens[1], key);
+        else if(tokens[0].toLowerCase() === "" && tokens.length === 2){  //Alias
+            return Alias.Lookup(tokens[1].toLowerCase());
         }
         //Key not found
         return "{" + key + "}";
@@ -219,13 +220,15 @@ export class Grammer{
 
     public Mod(key: string, value: string, type: string){
         let stem = Han_lib.Stem(value);
-        switch (type.toLowerCase()){
+        switch (type){
             case "adj":
                 return this.Adjective(value);
             case "stem":
                 return Han_lib.Stem(value);
             case "hstem":
                 return Han_lib.Hstem(value);
+            case "pstem":
+                return Han_lib.Pstem(value);
             case "sfcs":
                 return this.FCS(value, true, key);
             case "fcs":
@@ -237,16 +240,25 @@ export class Grammer{
                     return this.FCS(value, false, key) + "요";
                 }
                 return value + "요";
+            case "YO":
+                if(value.charAt(value.length - 1) === '다'){
+                    return this.FCS(value, false, key) + "겄어요";
+                }
+                return value + "겄어요";
             case "sup":
                 if(Han_lib.Batchim(stem)){
                     return stem + "습니다";
                 }
                 return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, stem, "ㅂ") + "니다";
+            case "SUP":
+                return stem + "겠습니다";
             case "ni":
                 if(Han_lib.Batchim(stem)){
                     return stem + "습니까";    
                 }
                 return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, stem, "ㅂ") + "니까";
+            case "NI":
+                return stem + "겠습니까"
             case "pt":
                 return Han_lib.SetLetterInFinalSyllable(LetterPosition.Final, this.FCS(value, false, key), 'ㅆ') + '어';
             case "ft":
@@ -373,61 +385,6 @@ export class Grammer{
         return "NaN";
     }
 
-    public Units(name: string, key: string){
-        switch (name.toLowerCase()){
-            case "item":
-                return "개";
-            case "animal":
-                return "마리";
-            case "cup":
-                return "잔";
-            case "bottle":
-                return "병";
-            case "slice":
-                return "조각";
-            case "book":
-                return "권";
-            case "car":
-                return "대";
-            case "action":
-                return "번";
-            case "order":
-                return "번째";
-            case "clothing":
-                return "벌";
-            case "people":
-                return "명";
-            case "bigwig":
-                return "분";
-            case "serving":
-                return "인분";
-            case "second":
-                return "초";
-            case "minute":
-                return "분";
-            case "hour":
-                return "시";
-            case "day":
-                return "일";
-            case "month":
-                return "월";
-            case "year":
-                return "년";
-            case "age":
-                return "살";
-            case "$":
-                return "달러";
-            case "₩":
-                return "원";
-            case "\\":
-                return "원";
-            case "list":
-                return "item, animal, cup, bottle, slice, book, car, action, order, clothing, people, bigwigs, servings, second, minute, hour, day, month, year, age, $, ₩";
-            default:
-                return "{" + key + "}";
-        }
-    }
-
     public EvaluateParticle(PreviousWord: string, rule: string){
         if (rule === "은/는" || rule.toLowerCase() === "t")
         {
@@ -468,6 +425,11 @@ export class Grammer{
         if (rule === "이에/예")
         {
             return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "이에" : "예");
+        }
+
+        if (rule === "이니/니")
+        {
+            return PreviousWord + (Han_lib.NonㄹBatchim(PreviousWord) ? "이니" : "니");
         }
 
         if(rule === "으")

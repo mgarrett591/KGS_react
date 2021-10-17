@@ -21,7 +21,7 @@ test('Sino 1', () => {
 
 test('Item 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.item} {unit.item}';
+    gram.Templet = '{var.item} {.item}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -30,7 +30,7 @@ test('Item 1', () => {
 
 test('Animal 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.animal} {unit.animal}';
+    gram.Templet = '{var.animal} {.animal}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -39,7 +39,7 @@ test('Animal 1', () => {
 
 test('Cup 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.cup} {unit.cup}';
+    gram.Templet = '{var.cup} {.cup}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -48,7 +48,7 @@ test('Cup 1', () => {
 
 test('Bottle 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.bottle} {unit.bottle}';
+    gram.Templet = '{var.bottle} {.bottle}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -57,7 +57,7 @@ test('Bottle 1', () => {
 
 test('Slice 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.slice} {unit.slice}';
+    gram.Templet = '{var.slice} {.slice}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -66,7 +66,7 @@ test('Slice 1', () => {
 
 test('Book 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.book} {unit.book}';
+    gram.Templet = '{var.book} {.book}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -75,7 +75,7 @@ test('Book 1', () => {
 
 test('Car 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.car} {unit.car}';
+    gram.Templet = '{var.car} {.car}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -84,7 +84,7 @@ test('Car 1', () => {
 
 test('Action 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.action} {unit.action}';
+    gram.Templet = '{var.action} {.action}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -93,7 +93,7 @@ test('Action 1', () => {
 
 test('Order', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.order}{unit.order}';
+    gram.Templet = '{var.order}{.order}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -102,7 +102,7 @@ test('Order', () => {
 
 test('Clothing', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.clothing} {unit.clothing}';
+    gram.Templet = '{var.clothing} {.clothing}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -111,7 +111,7 @@ test('Clothing', () => {
 
 test('People', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.people} {unit.people}';
+    gram.Templet = '{var.people} {.people}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -120,7 +120,7 @@ test('People', () => {
 
 test('Bigwig', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.bigwig} {unit.bigwig}';
+    gram.Templet = '{var.bigwig} {.bigwig}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -129,7 +129,7 @@ test('Bigwig', () => {
 
 test('Serving', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.serving} {unit.serving}';
+    gram.Templet = '{var.serving} {.serving}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -138,7 +138,7 @@ test('Serving', () => {
 
 test('Second 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.second}{unit.second}';
+    gram.Templet = '{var.second}{.second}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -147,7 +147,7 @@ test('Second 1', () => {
 
 test('Minute 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.minute}{unit.minute}';
+    gram.Templet = '{var.minute}{.minute}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -156,7 +156,7 @@ test('Minute 1', () => {
 
 test('Hour 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.hour}{unit.hour}';
+    gram.Templet = '{var.hour}{.hour}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -165,7 +165,7 @@ test('Hour 1', () => {
 
 test('Day 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.day}{unit.day}';
+    gram.Templet = '{var.day}{.day}';
     gram.WordMap.set("var", "1");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -174,7 +174,7 @@ test('Day 1', () => {
 
 test('Month 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.month}{unit.month}';
+    gram.Templet = '{var.month}{.month}';
     gram.WordMap.set("var", "6");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -183,7 +183,7 @@ test('Month 1', () => {
 
 test('Year 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.year}{unit.year}';
+    gram.Templet = '{var.year}{.year}';
     gram.WordMap.set("var", "2017");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -192,7 +192,7 @@ test('Year 1', () => {
 
 test('Age 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.age} {unit.age}';
+    gram.Templet = '{var.age} {.age}';
     gram.WordMap.set("var", "23");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -201,7 +201,7 @@ test('Age 1', () => {
 
 test('Dollar 1', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.$} {unit.$}';
+    gram.Templet = '{var.$} {.$}';
     gram.WordMap.set("var", "200");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -210,7 +210,7 @@ test('Dollar 1', () => {
 
 test('Won 5000 ', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.₩} {unit.₩}';
+    gram.Templet = '{var.₩} {.₩}';
     gram.WordMap.set("var", "5000");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
@@ -219,18 +219,9 @@ test('Won 5000 ', () => {
 
 test('Won 5000 korea with backslash', () => {
     let gram = new Grammer();
-    gram.Templet = '{var.\\} {unit.\\}';
+    gram.Templet = '{var.\\} {.\\}';
     gram.WordMap.set("var", "5000");
     gram = KGSi.Interpolator(gram);
     let Value: string = gram.EvalString;
     expect(Value).toEqual("오천 원");
-});
-
-test('List', () => {
-    let gram = new Grammer();
-    gram.Templet = '{unit.list}';
-    gram = KGSi.Interpolator(gram);
-    let expected: string = "item, animal, cup, bottle, slice, book, car, action, order, clothing, people, bigwigs, servings, second, minute, hour, day, month, year, age, $, ₩";
-    let Value: string = gram.EvalString;
-    expect(Value).toEqual(expected);
 });
