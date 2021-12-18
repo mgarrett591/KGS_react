@@ -1,7 +1,7 @@
-import { Grammer } from "./Grammer";
-
+import { state } from "./state";
+import { Hand } from './Hand';
+import { Particals } from './Particals';
 export class KGSi{
-    
     private static ValidDepth(Depth:number){
         return Depth === 0b100 || Depth === 0b1 || Depth === 0b0;
     };
@@ -31,40 +31,51 @@ export class KGSi{
         }
         return Depth === 0;
     };
+    
+    public static Interpolator(State: state) {
+        State.Clear();
+        State.Output = State.Input;
 
-    private static MyReplaceAll(Source:string, Find: string, Replace: string){
-        while(Source.indexOf(Find) !== -1){
-            Source = Source.replace(Find, Replace);
-        }
-        return Source;
-    }
-
-    public static Interpolator(gram: Grammer) {
+        //
         //Sytax
-        if (!this.CheckSyntax(gram.Templet)){
-            gram.EvalString = "";
-            gram.Messages.push("Check your Syntax!");
-            return gram.Copy(); //We return a copy so React will update the gui
+        if (!this.CheckSyntax(State.Input)){
+            State.Output = "";
+            State.Log("Check your Syntax!");
+            return State.Copy(); //We return a copy so React will update the gui
         }
+
 
         //Variables
-        let Templet = KGSi.MyReplaceAll(gram.Templet,"}","{");
-        let VariableInterpolationTable:string[] = Templet.split('{');
-        for (let i: number = 1; i < VariableInterpolationTable.length; i += 2){
-            VariableInterpolationTable[i] = gram.EvaluateVariableTableKey(VariableInterpolationTable[i]);
+        let Templet = State.Input.replaceAll("}","{");
+        let Variables:string[] = Templet.split('{');
+        for (let i: number = 1; i < Variables.length; i += 2){
+            let value: string | undefined = State.VariableLookup(Variables[i]);
+            if(value !== undefined){
+                Variables[i] = value;
+                continue;
+            }
+            let tokens: string[] = Variables[i].split('.');
+            if(tokens.length === 2){
+                value = Hand.Wave(State.VariableLookup(tokens[0]), tokens[1]);
+                if(value !== undefined){
+                    Variables[i] = value;
+                    continue;
+                }
+            }
+            State.Log("Unable to evaluate " + Variables[i]);
         }
-        Templet = VariableInterpolationTable.join("");
+        Templet = Variables.join("");
 
         //Particals
-        Templet = KGSi.MyReplaceAll(Templet,"]", "[");
+        Templet = Templet.replaceAll("]", "[");
         let ParticleTable:string[] = Templet.split('[');
         for (let i:number = 1; i < ParticleTable.length; i += 2){
-            ParticleTable[i] = gram.EvaluateParticle(ParticleTable[i-1], ParticleTable[i]);
+            ParticleTable[i] = Particals.EvaluateParticle(ParticleTable[i-1], ParticleTable[i]);
             ParticleTable[i - 1] = "";
         }
-        gram.EvalString = ParticleTable.join("");        
+        State.Output = ParticleTable.join("");
+        // 
 
-        return gram.Copy(); //We return a copy so React will update the gui
+        return State.Copy(); //We return a copy so React will update the gui        
     };
-
-};
+}

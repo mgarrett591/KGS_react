@@ -1,35 +1,22 @@
 export enum LetterPosition{
-    Initial = 1,
+    Initial = 0,
     Medial,
     Final
 };
+export enum VerbOps{
+    Dictionary = 0,
+    Stem,
+    FCS,
+    PastFCS,
+    Hal,
+    Set_Bieup_as_Batchim_if_the_Batchim_is_blank,
+    HadaStem
+}
 
 export class Han_lib{
     private static InitialConsonants:string[] = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
     private static MedialVowels:string[] = ["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅘ", "ㅙ", "ㅚ", "ㅛ", "ㅜ", "ㅝ", "ㅞ", "ㅟ", "ㅠ", "ㅡ", "ㅢ", "ㅣ"];
     private static FinalConsonants:string[] = [" ", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ", "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ"];
-
-    public static IsLit(key: string){
-        return key.length >= 3 && key.charAt(0) === '"' && key.charAt(key.length - 1) === '"';
-    }
-
-    public static GetLit(key: string){
-        if(key.length < 3){
-            return "";
-        }
-        return key.substr(1, key.length - 2);
-    }
-
-    public static LitMapHas(GrammarVars: Map<string, string>, key: string){
-        return GrammarVars.has(key) || this.IsLit(key);
-    }
-
-    public static LitMapGit(GrammarVars: Map<string, string>, key: string){
-        if(GrammarVars.has(key)){
-            return String(GrammarVars.get(key));
-        }
-        return this.GetLit(key);
-    }
 
     public static Batchim(Word: string){
         if (Word === "")
