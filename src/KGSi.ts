@@ -1,6 +1,8 @@
 import { state } from "./state";
 import { Hand } from './Hand';
 import { Particals } from './Particals';
+import { db } from './db';
+
 export class KGSi{
     private static ValidDepth(Depth:number){
         return Depth === 0b100 || Depth === 0b1 || Depth === 0b0;
@@ -74,6 +76,7 @@ export class KGSi{
             ParticleTable[i - 1] = "";
         }
         State.Output = ParticleTable.join("");
+        State.Output = db.AjaxExample();
         // 
 
         return State.Copy(); //We return a copy so React will update the gui        

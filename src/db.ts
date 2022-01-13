@@ -59,6 +59,7 @@ export class db{
     }
 
 
+
 }
 export class IrregularLists{
     //ㄷ irregular verbs -- https://www.koreanwikiproject.com/wiki/%E3%84%B7_irregular_verbs
